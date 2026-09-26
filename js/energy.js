@@ -1,4 +1,14 @@
 import { escapeHtml } from "./util.js";
+import { bboxOf } from "./geo.js";
+import { HEAT_RAMP } from "./map.js";
+
+const HEAT_METRICS = [
+  { key: "elec_bill", label: "Electric bill", fmt: (v) => `$${Math.round(v)}/mo` },
+  { key: "est_kwh", label: "Electricity use (est.)", fmt: (v) => `${Math.round(v)} kWh/mo` },
+  { key: "gas_bill", label: "Gas bill", fmt: (v) => `$${Math.round(v)}/mo` },
+  { key: "water_bill", label: "Water & sewer bill", fmt: (v) => `$${Math.round(v)}/mo` },
+  { key: "burden_pct", label: "Share of income", fmt: (v) => `${v.toFixed(1)}%` },
+];
 
 const GLENDALE_ID = "7294";
 const UTILITY_COLORS = {
@@ -35,34 +45,180 @@ function rateIndex(steps, start) {
 
 /** Energy & water view: rate-hike timeline, price history vs. neighbors, monthly water use. */
 export class EnergyView {
-  constructor({ summaryEl, chartEls, notesEl, getMap }) {
-    Object.assign(this, { summaryEl, chartEls, notesEl, getMap });
+  constructor({ summaryEl, chartEls, notesEl, getMap, heat, onFlyTo }) {
+    Object.assign(this, { summaryEl, chartEls, notesEl, getMap, heat, onFlyTo });
     this.loaded = false;
     this.marker = null;
+    this.metric = HEAT_METRICS[0];
+    this.yearIdx = 0;
+    this.timer = null;
   }
 
   async load() {
     if (!this.loaded) {
       try {
-        [this.rates, this.electric, this.water] = await Promise.all([
+        [this.rates, this.electric, this.water, this.costs, this.tracts] = await Promise.all([
           getJson("data/utility/rate_actions.json"),
           getJson("data/utility/electric_prices.json"),
           getJson("data/utility/water_use.json"),
+          getJson("data/utility/tract_costs.json"),
+          getJson("data/glendale/tracts.geojson"),
         ]);
       } catch (err) {
-        this.summaryEl.innerHTML = `<p class="feed-status bad">Could not load utility data (${escapeHtml(err.message)}). Run scripts/fetch_utility.py.</p>`;
+        this.summaryEl.innerHTML = `<p class="feed-status bad">Could not load utility data (${escapeHtml(err.message)}). Run scripts/fetch_utility.py and scripts/fetch_neighborhood_costs.py.</p>`;
         return;
       }
       this.loaded = true;
+      this.years = Object.keys(this.costs.years).sort();
+      this.yearIdx = this.years.length - 1;
+      this.tractInfo = new Map(this.tracts.features.map((f) => [f.properties.geoid, f]));
+      this.#initHeat();
       this.#renderSummary();
       this.#buildCharts();
       this.notesEl.innerHTML = [
+        `Neighborhood heatmap: ${escapeHtml(this.costs.source)}. ${this.costs.notes.map(escapeHtml).join(" ")}`,
         `Rates: ${escapeHtml(this.rates.note)}`,
         `Prices: ${escapeHtml(this.electric.source)}. ${escapeHtml(this.electric.note)}`,
         `Water: ${escapeHtml(this.water.source)}. ${escapeHtml(this.water.note)}`,
       ].join(" ");
     }
     this.showMarker(true);
+    this.#applyHeat();
+  }
+
+  leave() {
+    this.stopPlay();
+    this.showMarker(false);
+    this.popup?.remove();
+  }
+
+  #initHeat() {
+    const h = this.heat;
+    this.ranges = Object.fromEntries(HEAT_METRICS.map((m) => {
+      const vals = this.years.flatMap((y) => Object.values(this.costs.years[y].tracts).map((t) => t[m.key])).filter((v) => v != null);
+      return [m.key, [Math.min(...vals), Math.max(...vals)]];
+    }));
+    h.metricEl.innerHTML = HEAT_METRICS.map((m) => `<button type="button" data-key="${m.key}">${escapeHtml(m.label)}</button>`).join("");
+    h.metricEl.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      this.metric = HEAT_METRICS.find((m) => m.key === b.dataset.key);
+      this.#applyHeat();
+    });
+    h.yearEl.max = String(this.years.length - 1);
+    h.yearEl.value = String(this.yearIdx);
+    h.ticksEl.innerHTML = this.years.map((_, i) => `<option value="${i}"></option>`).join("");
+    h.yearEl.addEventListener("input", () => {
+      this.stopPlay();
+      this.yearIdx = Number(h.yearEl.value);
+      this.#applyHeat();
+    });
+    h.playBtn.addEventListener("click", () => (this.timer ? this.stopPlay() : this.play()));
+
+    const m = this.getMap();
+    let hovered = null;
+    this.popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false, maxWidth: "260px", offset: 8 });
+    m.on("mousemove", "tract_heat", (e) => {
+      const f = e.features[0];
+      if (!f) return;
+      if (hovered && hovered !== f.id) m.setFeatureState({ source: "tract_heat", id: hovered }, { hover: false });
+      hovered = f.id;
+      m.setFeatureState({ source: "tract_heat", id: hovered }, { hover: true });
+      this.popup.setLngLat(e.lngLat).setHTML(this.#tractHtml(f.id)).addTo(m);
+    });
+    m.on("mouseleave", "tract_heat", () => {
+      if (hovered) m.setFeatureState({ source: "tract_heat", id: hovered }, { hover: false });
+      hovered = null;
+      this.popup.remove();
+    });
+    // GeoJSON feature state can only be set once the source has parsed its data.
+    m.on("sourcedata", (e) => {
+      if (e.sourceId === "tract_heat" && e.isSourceLoaded && !this.stateReady) {
+        this.stateReady = true;
+        this.#applyHeat();
+      }
+    });
+  }
+
+  play() {
+    if (this.yearIdx >= this.years.length - 1) this.yearIdx = 0;
+    this.heat.playBtn.textContent = "❚❚";
+    this.#applyHeat();
+    this.timer = setInterval(() => {
+      this.yearIdx += 1;
+      this.#applyHeat();
+      if (this.yearIdx >= this.years.length - 1) this.stopPlay();
+    }, 1300);
+  }
+
+  stopPlay() {
+    clearInterval(this.timer);
+    this.timer = null;
+    if (this.heat) this.heat.playBtn.textContent = "▶";
+  }
+
+  #tractName(geoid) {
+    const p = this.tractInfo.get(geoid)?.properties;
+    if (!p) return geoid;
+    return p.neighborhood ? `${p.neighborhood} (${p.name.replace("Census ", "")})` : p.name;
+  }
+
+  #tractHtml(geoid) {
+    const y = this.years[this.yearIdx];
+    const t = this.costs.years[y].tracts[geoid];
+    if (!t) return escapeHtml(this.#tractName(geoid));
+    const row = (m) => {
+      const v = t[m.key];
+      return `<tr${m.key === this.metric.key ? ' class="on"' : ""}><td>${escapeHtml(m.label)}</td><td>${v == null ? "—" : m.fmt(v)}</td></tr>`;
+    };
+    return `<b>${escapeHtml(this.#tractName(geoid))}</b><br><span class="fine">Survey years ${this.costs.years[y].span}</span>
+      <table class="tract-pop">${HEAT_METRICS.map(row).join("")}
+      <tr><td>Median household income</td><td>${t.income ? `$${Math.round(t.income).toLocaleString()}` : "—"}</td></tr>
+      <tr><td>Households paying own electric</td><td>${t.pays_own_electric_pct ?? "—"}%</td></tr></table>`;
+  }
+
+  #applyHeat() {
+    if (!this.loaded) return;
+    const h = this.heat;
+    const y = this.years[this.yearIdx];
+    const period = this.costs.years[y];
+    const [lo, hi] = this.ranges[this.metric.key];
+    const m = this.getMap();
+    if (m.getSource("tract_heat")) {
+      for (const geoid of this.tractInfo.keys()) {
+        const v = period.tracts[geoid]?.[this.metric.key];
+        m.setFeatureState({ source: "tract_heat", id: geoid }, { t: v == null ? -1 : (v - lo) / (hi - lo || 1) });
+      }
+    }
+    for (const b of h.metricEl.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.key === this.metric.key));
+    h.yearEl.value = String(this.yearIdx);
+    h.yearLabel.textContent = `Survey years ${period.span}`;
+    h.legendEl.innerHTML = `${this.metric.fmt(lo)}<i style="background:linear-gradient(90deg,${HEAT_RAMP.join(",")})"></i>${this.metric.fmt(hi)}`;
+    this.#renderRank();
+  }
+
+  #renderRank() {
+    const el = this.summaryEl.querySelector("#heat-rank");
+    if (!el) return;
+    const key = this.metric.key;
+    const y = this.years[this.yearIdx];
+    const period = this.costs.years[y];
+    const median = (yr) => {
+      const vals = Object.values(this.costs.years[yr].tracts).map((t) => t[key]).filter((v) => v != null).sort((a, b) => a - b);
+      return vals[Math.floor(vals.length / 2)];
+    };
+    const first = this.years[0];
+    const change = y !== first ? ((median(y) / median(first) - 1) * 100) : null;
+    const ranked = [...this.tractInfo.keys()]
+      .map((g) => ({ g, v: period.tracts[g]?.[key] }))
+      .filter((r) => r.v != null)
+      .sort((a, b) => b.v - a.v);
+    el.innerHTML = `
+      <p class="fine">Typical Glendale neighborhood, ${period.span}: <b>${this.metric.fmt(median(y))}</b>${change != null ? ` (${change >= 0 ? "+" : ""}${change.toFixed(0)}% vs. ${this.costs.years[first].span})` : ""}. Highest ${escapeHtml(this.metric.label.toLowerCase())}:</p>
+      <ol class="tract-list">${ranked.slice(0, 5).map((r) => `<li data-g="${r.g}"><b>${escapeHtml(this.#tractName(r.g))}</b> <span class="fine">${this.metric.fmt(r.v)}</span></li>`).join("")}</ol>`;
+    el.querySelectorAll("li[data-g]").forEach((li) => li.addEventListener("click", () => {
+      this.onFlyTo(bboxOf(this.tractInfo.get(li.dataset.g).geometry));
+    }));
   }
 
   showMarker(on) {
@@ -99,6 +255,9 @@ export class EnergyView {
     const s = this.rates.storage;
 
     this.summaryEl.innerHTML = `
+      <div id="heat-rank"></div>
+      <p class="fine">Hover a neighborhood on the map for all its numbers. Use the timeline below to step through survey periods.</p>
+      <h4 class="sub">Rates</h4>
       <div class="stat-grid">
         <div><b>+${Math.round(elecTotal)}%</b><span>average electric rates, Jan 2024 → Nov 2027 (all steps adopted)</span></div>
         <div><b>+${Math.round(waterProposed)}%</b><span>water rates 2027 → 2031 if the proposed plan is adopted</span></div>

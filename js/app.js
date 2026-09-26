@@ -8,7 +8,8 @@ import { HistoryView } from "./history.js";
 import { ZoningView } from "./zoning.js";
 import { EnergyView } from "./energy.js";
 
-const MODES = ["replay", "history", "zoning", "energy"];
+const MODES = ["energy", "history", "zoning", "replay"];
+const DEFAULT_MODE = "energy";
 const DEFAULT_EVENT = "eaton-2025";
 
 const KIND_ICON = { fire: "🔥", flood: "🌧", quake: "〰" };
@@ -57,6 +58,7 @@ let charts;
 let historyView;
 let zoningView;
 let energyView;
+let mapReady = false;
 
 async function loadEvent(id) {
   if (!state.cache.has(id)) {
@@ -165,7 +167,7 @@ function showModeElements(mode) {
 async function setMode(mode) {
   stop();
   historyView.stopAnimate();
-  if (mode !== "energy") energyView.showMarker(false);
+  if (mode !== "energy") energyView.leave();
   state.mode = mode;
   showModeElements(mode);
   map.map.resize();
@@ -188,9 +190,16 @@ async function setMode(mode) {
   renderLayerToggles();
 }
 
+function modeFromHash() {
+  const hash = location.hash.slice(1);
+  if (MODES.includes(hash)) return hash;
+  return hash ? "replay" : DEFAULT_MODE;
+}
+
 function route() {
   const hash = location.hash.slice(1);
-  if (MODES.includes(hash) && hash !== "replay") return setMode(hash);
+  const mode = modeFromHash();
+  if (mode !== "replay") return setMode(mode);
   const id = state.index.some((e) => e.id === hash) ? hash : DEFAULT_EVENT;
   if (state.mode !== "replay") {
     state.mode = "replay";
@@ -252,7 +261,15 @@ function stop() {
 function bindUi() {
   $("mode-tabs").addEventListener("click", (e) => {
     const b = e.target.closest("button");
-    if (b && b.dataset.mode !== state.mode) setMode(b.dataset.mode);
+    if (!b || b.dataset.mode === state.mode) return;
+    if (!mapReady) {
+      // The map applies the mode from the hash once its layers exist.
+      history.replaceState(null, "", `#${b.dataset.mode === "replay" ? DEFAULT_EVENT : b.dataset.mode}`);
+      state.mode = b.dataset.mode;
+      showModeElements(state.mode);
+      return;
+    }
+    setMode(b.dataset.mode);
   });
   window.addEventListener("hashchange", route);
   $("year-presets").addEventListener("click", (e) => {
@@ -296,6 +313,11 @@ function bindUi() {
   $("layer-toggles").addEventListener("change", (e) => {
     const id = e.target.dataset.layer;
     if (id) map.setLayerVisible(id, e.target.checked);
+    if (id === "tract_heat") $("heat-on").checked = e.target.checked;
+  });
+  $("heat-on").addEventListener("change", (e) => {
+    map.setLayerVisible("tract_heat", e.target.checked);
+    renderLayerToggles();
   });
   $("live-btn").addEventListener("click", async () => {
     stop();
@@ -324,7 +346,8 @@ async function main() {
   }
   setSegPressed("speed", "speed", state.speed);
   renderTabs();
-  showModeElements("replay");
+  state.mode = modeFromHash();
+  showModeElements(state.mode);
   historyView = new HistoryView({
     summaryEl: $("history-summary"), chartEl: $("decade-chart"),
     fromEl: $("year-from"), toEl: $("year-to"), animateBtn: $("animate-btn"),
@@ -339,9 +362,14 @@ async function main() {
     summaryEl: $("energy-summary"), notesEl: $("energy-notes"),
     chartEls: [$("rate-chart"), $("price-chart"), $("water-chart")],
     getMap: () => map.map,
+    onFlyTo: (bounds) => map.fitTo(bounds, 14),
+    heat: {
+      metricEl: $("heat-metric"), yearEl: $("heat-year"), ticksEl: $("heat-year-ticks"),
+      yearLabel: $("heat-year-label"), legendEl: $("heat-legend"), playBtn: $("heat-play"),
+    },
   });
   bindUi();
-  map = new GodsEyeMap("map", route, (lngLat) => {
+  map = new GodsEyeMap("map", () => { mapReady = true; route(); }, (lngLat) => {
     map.markInspected(lngLat);
     inspect($("inspector"), lngLat);
   });

@@ -22,7 +22,18 @@ const yearColorExpr = ["interpolate", ["linear"], ["get", "year"], 1878, "#6b728
  * Map layers the user can toggle. `kinds` = event types that turn the layer on by default in
  * replay mode; `modes` = other modes that turn it on.
  */
+export const HEAT_RAMP = ["#2c7bb6", "#abd9e9", "#ffffbf", "#fdae61", "#d7191c"];
+
 export const GLENDALE_LAYERS = [
+  {
+    id: "tract_heat", file: "tracts", promoteId: "geoid", label: "Neighborhood bills & usage (Census)", kinds: [], modes: ["energy"], swatch: "#fdae61", type: "fill",
+    paint: {
+      "fill-color": ["case", ["<", ["coalesce", ["feature-state", "t"], -1], 0], "rgba(0,0,0,0)",
+        ["interpolate", ["linear"], ["feature-state", "t"], ...HEAT_RAMP.flatMap((c, i) => [i / (HEAT_RAMP.length - 1), c])]],
+      "fill-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.9, 0.68],
+      "fill-outline-color": "rgba(7,11,18,0.8)",
+    },
+  },
   {
     id: "zoning", file: "zoning", label: "Zoning (City of Glendale)", kinds: [], modes: ["zoning"], swatch: "#f4d35e", type: "fill",
     paint: { "fill-color": zoneColorExpr, "fill-opacity": 0.55, "fill-outline-color": "rgba(7,11,18,0.6)" },
@@ -152,7 +163,10 @@ export class GodsEyeMap {
     this.labelsId = m.getStyle().layers.find((l) => l.type === "symbol")?.id;
     const boundary = await (await fetch("data/glendale/city_boundary.geojson")).json();
     for (const layer of GLENDALE_LAYERS) {
-      m.addSource(layer.id, { type: "geojson", data: layer.url || `data/glendale/${layer.file}.geojson` });
+      m.addSource(layer.id, {
+        type: "geojson", data: layer.url || `data/glendale/${layer.file}.geojson`,
+        ...(layer.promoteId ? { promoteId: layer.promoteId } : {}),
+      });
       m.addLayer({
         id: layer.id, type: layer.type, source: layer.id, paint: layer.paint,
         layout: { visibility: "none" }, ...(layer.filter ? { filter: layer.filter } : {}),

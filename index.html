@@ -16,16 +16,17 @@
         <p>Disaster time machine: replay what the data showed before LA's biggest events</p>
       </div>
     </div>
-    <nav id="mode-tabs" class="seg mode-tabs" aria-label="View">
-      <button type="button" data-mode="replay">Event replay</button>
-      <button type="button" data-mode="history">Fire history</button>
-      <button type="button" data-mode="zoning">Zoning &amp; exposure</button>
-      <button type="button" data-mode="energy">Energy &amp; water</button>
-    </nav>
     <nav id="event-tabs" class="event-tabs" aria-label="Historical events" data-modes="replay"></nav>
     <div class="spacer" data-modes="history zoning energy"></div>
     <button id="live-btn" class="live-btn" type="button">● Compare with today</button>
   </header>
+
+  <nav id="mode-tabs" class="mode-bar" aria-label="Data layers">
+    <button type="button" data-mode="energy"><span class="mi">⚡</span><span><b>Energy &amp; water</b><small>Bills, usage and rate hikes by neighborhood</small></span></button>
+    <button type="button" data-mode="history"><span class="mi">🔥</span><span><b>Fire history</b><small>Every mapped wildfire since 1878</small></span></button>
+    <button type="button" data-mode="zoning"><span class="mi">▦</span><span><b>Zoning &amp; exposure</b><small>What's allowed where, and its hazards</small></span></button>
+    <button type="button" data-mode="replay"><span class="mi">⏱</span><span><b>Event replay</b><small>The days before LA's biggest disasters</small></span></button>
+  </nav>
 
   <main class="layout">
     <section class="map-wrap">
@@ -133,6 +134,17 @@
     </section>
 
     <section class="timeline" data-modes="energy">
+      <div class="heat-controls">
+        <div class="seg heat-metrics" id="heat-metric" role="group" aria-label="Heatmap metric"></div>
+        <label class="heat-toggle"><input type="checkbox" id="heat-on" checked /> Heatmap</label>
+      </div>
+      <div class="transport heat-timeline">
+        <button id="heat-play" type="button" class="play" aria-label="Play through survey years">▶</button>
+        <input id="heat-year" type="range" min="0" max="0" step="1" value="0" aria-label="Survey period" list="heat-year-ticks" />
+        <datalist id="heat-year-ticks"></datalist>
+        <span id="heat-year-label" class="window-label"></span>
+        <div id="heat-legend" class="heat-legend"></div>
+      </div>
       <div class="energy-charts">
         <div><canvas id="rate-chart"></canvas></div>
         <div><canvas id="price-chart"></canvas></div>
