@@ -25,15 +25,31 @@ To rebuild the Glendale layers from a newer snapshot, download and unzip the sna
 
 ```sh
 python3 scripts/prepare_glendale.py /path/to/unzipped/snapshot
+python3 scripts/compute_exposure.py      # zoning × hazard table (~30 s)
+```
+
+To refresh the fire history and debris-flow layers:
+
+```sh
+python3 scripts/fetch_history.py
+python3 scripts/compute_exposure.py
 ```
 
 ## Using it
+
+The top bar has three views. Click anywhere on the map in any view to see what the data says about that spot: zoning, fire hazard, FEMA flood zone, dam inundation, seismic zones, how many times it has burned, and the nearest Glendale fire station.
+
+**Fire history** (`#history`) maps about 600 wildfire perimeters around Glendale from 1878 to 2025. Overlapping burns stack darker. Pick a year range, click a decade bar, or press Animate to sweep a 10-year window through time. The side panel lists the largest fires in range (click to zoom) and links to the weather replays for La Tuna, Station and Eaton. The Eaton burn scar also shows USGS post-fire debris-flow basins.
+
+**Zoning & exposure** (`#zoning`) colors Glendale's zoning by type and shows a table of how much of each zone type sits in each hazard area, for example 74% of single-family-zoned land is Very High fire hazard and 74% of industrial land is in a liquefaction zone. Click a row or legend entry to highlight that zone type.
+
+**Event replay** (the default):
 
 - Pick an event in the top bar. The replay starts 72 hours before the event.
 - Press ▶ (or Space) to play; drag the slider, click any chart, or use ← → (Shift for a day) to scrub.
 - **Readings at cursor** shows conditions at that moment, at the event site or at Glendale; red and amber mark dangerous levels.
 - **Warning signs before the event** lists what the record showed and how many hours or days ahead.
-- **Glendale layers** toggles the hazard maps (fire hazard, flood, dam inundation, landslide, liquefaction, fault zones) plus fire stations, hospitals and schools.
+- **Map layers** toggles the hazard maps (fire hazard, flood, dam inundation, landslide, liquefaction, fault zones), zoning, fire history, fire stations, hospitals and schools.
 - **Compare with today** puts the live Glendale forecast, NWS alerts and USGS quakes beside the 48 hours before each past fire.
 
 ## Events
@@ -63,12 +79,17 @@ Add an event by appending to `EVENTS` in `scripts/fetch_events.py` and re-runnin
 | Fire starts | [CAL FIRE incidents](https://www.fire.ca.gov/incidents) | Undocumented feed |
 | Streamflow | [USGS Water Data API](https://api.waterdata.usgs.gov/) | Only Arroyo Seco has data in the new API for these dates |
 | Glendale hazard and city layers | [GlendaleGisMcp](https://github.com/HackerFund/GlendaleGisMcp) snapshot 2026-09-26 | Simplified to about 1 m for the browser |
+| Zoning | City of Glendale zoning via the GlendaleGisMcp snapshot | Current zoning only (no history); simplified to about 3 m |
+| Fire history | NIFC [InterAgency Fire Perimeter History](https://data-nifc.opendata.arcgis.com/) (to 2019) and WFIGS (2020+) | Incomplete before 1950; small fires often missing |
+| Post-fire debris flow | [USGS emergency assessments](https://www.usgs.gov/programs/landslide-hazards/science/emergency-assessment-post-fire-debris-flow-hazards) | Basin estimates only exist for fires since 2020 (Eaton here) |
 | Live mode | Open-Meteo forecast, [NWS alerts API](https://www.weather.gov/documentation/services-web-api), USGS feeds | Fetched in the browser |
 | Basemap | [OpenFreeMap](https://openfreemap.org/) dark style, © OpenStreetMap | |
 
 ## Limits
 
 - This replays archives for learning. **It is not an alert system.** In an emergency, follow official channels: [Alert LA County](https://alertlacounty.genasys.com/portal/en/register), [Glendale Everbridge](https://www.glendaleca.gov/government/departments/fire-department/other/emergency-preparedness-response/city-wide-emergency-communications), [Genasys Protect](https://protect.genasys.com/), [MyShake](https://www.earthquake.ca.gov/get-alerts/).
-- Hazard layers are regulatory maps, not site assessments. Outside a zone doesn't mean safe.
+- Hazard layers are regulatory maps, not site assessments. Outside a zone doesn't mean safe. CAL FIRE "NonWildland" means unzoned, not safe, and FEMA Zone D means not studied.
+- Zoning shows what is allowed, not what is built. Exposure shares come from a 50 m sample grid and are approximate.
+- Dam inundation areas show what would flood if a dam failed; the hazard class rates consequences, not likelihood.
 - The fire-weather score in live mode is an illustrative comparison made for this app, not an official rating.
 - Event times are approximate local reports of ignition or peak.

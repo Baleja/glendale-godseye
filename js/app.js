@@ -1,8 +1,14 @@
 import { HOUR, escapeHtml, fmtLocal, fmtShortLocal, leadLabel, tMinus } from "./util.js";
 import { activeWarnings, precursors, prepareEvent, vitals, WARNING_COLORS } from "./signals.js";
 import { ChartStack } from "./charts.js";
-import { GodsEyeMap, GLENDALE_LAYERS } from "./map.js";
+import { GodsEyeMap, GLENDALE_LAYERS, GLENDALE_BOUNDS, HISTORY_BOUNDS, defaultLayers } from "./map.js";
 import { openLive } from "./live.js";
+import { inspect } from "./inspector.js";
+import { HistoryView } from "./history.js";
+import { ZoningView } from "./zoning.js";
+
+const MODES = ["replay", "history", "zoning"];
+const DEFAULT_EVENT = "eaton-2025";
 
 const KIND_ICON = { fire: "🔥", flood: "🌧", quake: "〰" };
 const KIND_LABEL = { fire: "Wildfire", flood: "Storm / flood", quake: "Earthquake" };
@@ -33,6 +39,7 @@ const LESSONS = {
 };
 
 const state = {
+  mode: "replay",
   index: [],
   cache: new Map(),
   ev: null,
@@ -46,6 +53,8 @@ const state = {
 const $ = (id) => document.getElementById(id);
 let map;
 let charts;
+let historyView;
+let zoningView;
 
 async function loadEvent(id) {
   if (!state.cache.has(id)) {
@@ -145,6 +154,49 @@ function setSegPressed(groupId, attr, value) {
   for (const b of $(groupId).querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset[attr] === String(value)));
 }
 
+function showModeElements(mode) {
+  document.body.dataset.mode = mode;
+  for (const el of document.querySelectorAll("[data-modes]")) el.hidden = !el.dataset.modes.split(" ").includes(mode);
+  setSegPressed("mode-tabs", "mode", mode);
+}
+
+async function setMode(mode) {
+  stop();
+  historyView.stopAnimate();
+  state.mode = mode;
+  showModeElements(mode);
+  map.map.resize();
+  map.highlightZoneGroup(null);
+  if (mode === "replay") {
+    if (!state.ev) return selectEvent(DEFAULT_EVENT);
+    map.setEventLayersVisible(true);
+    map.showOnly(defaultLayers("replay", state.ev.kind));
+    map.fitEvent(state.ev);
+    history.replaceState(null, "", `#${state.ev.id}`);
+  } else {
+    map.setEventLayersVisible(false);
+    map.showOnly(defaultLayers(mode));
+    history.replaceState(null, "", `#${mode}`);
+    await (mode === "history" ? historyView.load() : zoningView.load());
+    if (mode === "zoning" && zoningView.selected) map.highlightZoneGroup(zoningView.selected);
+    map.map.resize();
+    map.fitTo(mode === "history" ? HISTORY_BOUNDS : GLENDALE_BOUNDS, 13);
+  }
+  renderLayerToggles();
+}
+
+function route() {
+  const hash = location.hash.slice(1);
+  if (MODES.includes(hash) && hash !== "replay") return setMode(hash);
+  const id = state.index.some((e) => e.id === hash) ? hash : DEFAULT_EVENT;
+  if (state.mode !== "replay") {
+    state.mode = "replay";
+    showModeElements("replay");
+    map.setEventLayersVisible(true);
+  }
+  return selectEvent(id);
+}
+
 async function selectEvent(id) {
   stop();
   let ev;
@@ -195,6 +247,24 @@ function stop() {
 }
 
 function bindUi() {
+  $("mode-tabs").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (b && b.dataset.mode !== state.mode) setMode(b.dataset.mode);
+  });
+  window.addEventListener("hashchange", route);
+  $("year-presets").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    historyView.stopAnimate();
+    historyView.setRange(Number(b.dataset.from), Number(b.dataset.to));
+  });
+  for (const id of ["year-from", "year-to"]) {
+    $(id).addEventListener("change", () => {
+      historyView.stopAnimate();
+      historyView.setRange(Number($("year-from").value), Number($("year-to").value));
+    });
+  }
+  $("animate-btn").addEventListener("click", () => historyView.toggleAnimate());
   $("event-tabs").addEventListener("click", (e) => {
     const b = e.target.closest(".event-tab");
     if (b) selectEvent(b.dataset.id);
@@ -231,6 +301,7 @@ function bindUi() {
     openLive($("live-dialog"), $("live-body"), events);
   });
   document.addEventListener("keydown", (e) => {
+    if (state.mode !== "replay" || !state.ev) return;
     if (e.target.tagName === "INPUT" && e.target.type !== "range") return;
     if (e.code === "Space") { e.preventDefault(); state.playing ? stop() : play(); }
     if (e.key === "ArrowRight") seek(state.cursor + (e.shiftKey ? 24 : 1) * HOUR);
@@ -250,10 +321,21 @@ async function main() {
   }
   setSegPressed("speed", "speed", state.speed);
   renderTabs();
+  showModeElements("replay");
+  historyView = new HistoryView({
+    summaryEl: $("history-summary"), chartEl: $("decade-chart"),
+    fromEl: $("year-from"), toEl: $("year-to"), animateBtn: $("animate-btn"),
+    onRange: (from, to) => map.setHistoryYears(from, to),
+    onFlyTo: (bounds) => map.fitTo(bounds, 13.5),
+  });
+  zoningView = new ZoningView({
+    summaryEl: $("zoning-summary"), tableEl: $("exposure-table"), notesEl: $("exposure-notes"),
+    onHighlight: (group) => map.highlightZoneGroup(group),
+  });
   bindUi();
-  map = new GodsEyeMap("map", () => {
-    const fromHash = location.hash.slice(1);
-    selectEvent(state.index.some((e) => e.id === fromHash) ? fromHash : "eaton-2025");
+  map = new GodsEyeMap("map", route, (lngLat) => {
+    map.markInspected(lngLat);
+    inspect($("inspector"), lngLat);
   });
 }
 

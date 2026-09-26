@@ -4,8 +4,37 @@ import { valueAt } from "./signals.js";
 
 const BASE_STYLE = "https://tiles.openfreemap.org/styles/dark";
 
-/** Glendale snapshot layers. `kinds` = event types that turn the layer on by default. */
+export const ZONE_GROUPS = {
+  single_family: { label: "Single-family residential (ROS, R1R, R1)", color: "#f4d35e" },
+  multifamily: { label: "Multifamily residential (R-3050 to R-1250)", color: "#ee964b" },
+  mixed_use: { label: "Mixed use / downtown (DSP, TOD, SFMU, IMU-R)", color: "#c77dff" },
+  commercial: { label: "Commercial (C1–C3, CA, CH, CR, MS…)", color: "#ff5d8f" },
+  industrial: { label: "Industrial / transportation (IND, IMU, T)", color: "#8d99ae" },
+  recreation: { label: "Special recreation / open space (SR)", color: "#3ddc97" },
+  cemetery: { label: "Cemetery", color: "#6c757d" },
+  streets_unzoned: { label: "Streets and unzoned gaps", color: "#333a45" },
+};
+
+const zoneColorExpr = ["match", ["get", "zone_group"], ...Object.entries(ZONE_GROUPS).flatMap(([k, v]) => [k, v.color]), "#555"];
+const yearColorExpr = ["interpolate", ["linear"], ["get", "year"], 1878, "#6b7280", 1950, "#b07d4f", 1980, "#ff9f1c", 2025, "#ff3d00"];
+
+/**
+ * Map layers the user can toggle. `kinds` = event types that turn the layer on by default in
+ * replay mode; `modes` = other modes that turn it on.
+ */
 export const GLENDALE_LAYERS = [
+  {
+    id: "zoning", file: "zoning", label: "Zoning (City of Glendale)", kinds: [], modes: ["zoning"], swatch: "#f4d35e", type: "fill",
+    paint: { "fill-color": zoneColorExpr, "fill-opacity": 0.55, "fill-outline-color": "rgba(7,11,18,0.6)" },
+  },
+  {
+    id: "fire_history", url: "data/history/fire_perimeters.geojson", label: "Fire history 1878–2025 (NIFC)", kinds: [], modes: ["history"], swatch: "#ff9f1c", type: "fill",
+    paint: { "fill-color": yearColorExpr, "fill-opacity": 0.16, "fill-outline-color": yearColorExpr },
+  },
+  {
+    id: "debris_basins", url: "data/history/debris_flow_basins.geojson", label: "Post-fire debris-flow basins (USGS)", kinds: [], modes: ["history"], swatch: "#8d6e63", type: "fill",
+    paint: { "fill-color": ["match", ["get", "hazard"], "High", "#d7263d", "Moderate", "#f49d37", "Low", "#f7e06b", "#888"], "fill-opacity": 0.55 },
+  },
   {
     id: "fhsz", file: "calfire_fhsz_lra", label: "Fire hazard severity (CAL FIRE)", kinds: ["fire"],
     swatch: "#ff4d5e", type: "fill",
@@ -13,60 +42,50 @@ export const GLENDALE_LAYERS = [
       "fill-color": ["match", ["get", "FHSZ_Description"], "Very High", "#ff4d5e", "High", "#ff9f1c", "Moderate", "#ffe066", "rgba(0,0,0,0)"],
       "fill-opacity": 0.28,
     },
-    popup: (p) => `<b>Fire hazard: ${escapeHtml(p.FHSZ_Description)}</b><br>CAL FIRE 2025 map. NonWildland means unzoned, not safe.`,
   },
   {
     id: "flood", file: "fema_flood_zones", label: "FEMA flood zones", kinds: ["flood"], swatch: "#4da3ff", type: "fill",
     filter: ["any", ["==", ["get", "SFHA_TF"], "T"], ["==", ["get", "ZONE_SUBTY"], "0.2 PCT ANNUAL CHANCE FLOOD HAZARD"]],
-    paint: { "fill-color": ["case", ["==", ["get", "SFHA_TF"], "T"], "#4da3ff", "#8fc6ff"], "fill-opacity": 0.4 },
-    popup: (p) => `<b>FEMA zone ${escapeHtml(p.FLD_ZONE)}</b><br>${escapeHtml(p.ZONE_SUBTY || "")}`,
-  },
+    paint: { "fill-color": ["case", ["==", ["get", "SFHA_TF"], "T"], "#4da3ff", "#8fc6ff"], "fill-opacity": 0.4 },  },
   {
     id: "dam", file: "dwr_dam_inundation", label: "Dam inundation areas (DWR)", kinds: ["flood"], swatch: "#9b5de5", type: "fill",
-    paint: { "fill-color": "#9b5de5", "fill-opacity": 0.18 },
-    popup: (p) => `<b>${escapeHtml(p.DamName)} dam inundation</b><br>${escapeHtml(p.Scenario)} · ${escapeHtml(p.LoadingScn || "")}<br>Hazard class (consequence): ${escapeHtml(p.HazardCl)}`,
-  },
+    paint: { "fill-color": "#9b5de5", "fill-opacity": 0.18 },  },
   {
     id: "landslide", file: "cgs_landslide_zones", label: "Earthquake landslide zones (CGS)", kinds: ["quake", "flood"], swatch: "#b5835a", type: "fill",
-    paint: { "fill-color": "#b5835a", "fill-opacity": 0.3 },
-    popup: () => "<b>Earthquake-induced landslide zone</b><br>California Geological Survey",
-  },
+    paint: { "fill-color": "#b5835a", "fill-opacity": 0.3 },  },
   {
     id: "liquefaction", file: "cgs_liquefaction_zones", label: "Liquefaction zones (CGS)", kinds: ["quake"], swatch: "#2ec4b6", type: "fill",
-    paint: { "fill-color": "#2ec4b6", "fill-opacity": 0.35 },
-    popup: () => "<b>Liquefaction zone</b><br>California Geological Survey",
-  },
+    paint: { "fill-color": "#2ec4b6", "fill-opacity": 0.35 },  },
   {
     id: "fault", file: "cgs_fault_zones", label: "Fault rupture zones (CGS)", kinds: ["quake"], swatch: "#ff4ecd", type: "fill",
-    paint: { "fill-color": "#ff4ecd", "fill-opacity": 0.45 },
-    popup: (p) => `<b>Alquist-Priolo fault zone</b><br>${escapeHtml(p.QUAD_NAME)} quadrangle`,
-  },
+    paint: { "fill-color": "#ff4ecd", "fill-opacity": 0.45 },  },
   {
     id: "neighborhoods", file: "neighborhood_zones", label: "Neighborhoods", kinds: [], swatch: "#7d8ba3", type: "line",
     paint: { "line-color": "#7d8ba3", "line-width": 0.6, "line-opacity": 0.7 },
   },
   {
     id: "stations", file: "fire_stations", label: "Fire stations", kinds: ["fire", "flood", "quake"], swatch: "#ff6a3d", type: "circle",
-    paint: { "circle-radius": 5, "circle-color": "#ff6a3d", "circle-stroke-color": "#fff", "circle-stroke-width": 1.2 },
-    popup: (p) => `<b>${escapeHtml(p.NAME)}</b><br>${escapeHtml(p.ADDRESS)}`,
-  },
+    paint: { "circle-radius": 5, "circle-color": "#ff6a3d", "circle-stroke-color": "#fff", "circle-stroke-width": 1.2 },  },
   {
     id: "hospitals", file: "hospitals", label: "Hospitals", kinds: ["quake"], swatch: "#3ddc97", type: "circle",
-    paint: { "circle-radius": 6, "circle-color": "#3ddc97", "circle-stroke-color": "#fff", "circle-stroke-width": 1.2 },
-    popup: (p) => `<b>${escapeHtml(p.NAME)}</b><br>${escapeHtml([p.ST_NUM, p.ST_DIR, p.ST_NAME, p.ST_TYPE].filter(Boolean).join(" "))}`,
-  },
+    paint: { "circle-radius": 6, "circle-color": "#3ddc97", "circle-stroke-color": "#fff", "circle-stroke-width": 1.2 },  },
   {
     id: "schools", file: "schools", label: "Schools", kinds: [], swatch: "#ffe066", type: "circle",
-    paint: { "circle-radius": 3.5, "circle-color": "#ffe066", "circle-stroke-color": "#222", "circle-stroke-width": 0.8 },
-    popup: (p) => `<b>${escapeHtml(p.SCHOOL)}</b><br>${escapeHtml(p.School_typ)} · ${escapeHtml(p.ADDRESS)}`,
-  },
+    paint: { "circle-radius": 3.5, "circle-color": "#ffe066", "circle-stroke-color": "#222", "circle-stroke-width": 0.8 },  },
 ];
 
+export function defaultLayers(mode, kind) {
+  return GLENDALE_LAYERS
+    .filter((l) => (mode === "replay" ? l.kinds.includes(kind) : (l.modes || []).includes(mode)))
+    .map((l) => l.id);
+}
+
 const EMPTY = { type: "FeatureCollection", features: [] };
-const GLENDALE_BOUNDS = [[-118.32, 34.10], [-118.18, 34.27]];
+export const GLENDALE_BOUNDS = [[-118.32, 34.10], [-118.18, 34.27]];
+export const HISTORY_BOUNDS = [[-118.45, 34.05], [-118.05, 34.35]];
 
 export class GodsEyeMap {
-  constructor(el, onReady) {
+  constructor(el, onReady, onInspect) {
     this.map = new maplibregl.Map({
       container: el,
       style: BASE_STYLE,
@@ -80,11 +99,51 @@ export class GodsEyeMap {
     this.windMarkers = [];
     this.eventMarker = null;
     this.ev = null;
+    this.inspectMarker = null;
     this.map.on("load", async () => {
       await this.#addGlendale();
       this.#addEventLayers();
+      this.map.on("click", (e) => {
+        const onEventFeature = this.map.queryRenderedFeatures(e.point, { layers: ["quakes", "calfire", "gauges"] }).length;
+        if (!onEventFeature) onInspect(e.lngLat);
+      });
       onReady();
     });
+  }
+
+  markInspected(lngLat) {
+    if (!this.inspectMarker) {
+      const el = document.createElement("div");
+      el.className = "inspect-pin";
+      this.inspectMarker = new maplibregl.Marker({ element: el });
+    }
+    this.inspectMarker.setLngLat(lngLat).addTo(this.map);
+  }
+
+  /** Turns on exactly the toggleable layers in `ids`. */
+  showOnly(ids) {
+    for (const l of GLENDALE_LAYERS) this.setLayerVisible(l.id, ids.includes(l.id));
+  }
+
+  setEventLayersVisible(on) {
+    const v = on ? "visible" : "none";
+    for (const id of ["perimeter-fill", "perimeter-line", "gauges", "calfire", "quakes"]) this.map.setLayoutProperty(id, "visibility", v);
+    this.windMarkers.forEach((w) => { w.el.style.display = on ? "" : "none"; });
+    if (this.eventMarker) this.eventMarker.getElement().style.display = on ? "" : "none";
+  }
+
+  setHistoryYears(from, to) {
+    this.map.setFilter("fire_history", ["all", [">=", ["get", "year"], from], ["<=", ["get", "year"], to]]);
+  }
+
+  highlightZoneGroup(group) {
+    this.map.setPaintProperty("zoning", "fill-opacity", group
+      ? ["case", ["==", ["get", "zone_group"], group], 0.85, 0.12]
+      : 0.55);
+  }
+
+  fitTo(bounds, maxZoom = 13) {
+    this.map.fitBounds(bounds, { padding: { top: 90, bottom: 60, left: 60, right: 60 }, duration: 1000, maxZoom });
   }
 
   async #addGlendale() {
@@ -93,19 +152,13 @@ export class GodsEyeMap {
     this.labelsId = m.getStyle().layers.find((l) => l.type === "symbol")?.id;
     const boundary = await (await fetch("data/glendale/city_boundary.geojson")).json();
     for (const layer of GLENDALE_LAYERS) {
-      m.addSource(layer.id, { type: "geojson", data: `data/glendale/${layer.file}.geojson` });
+      m.addSource(layer.id, { type: "geojson", data: layer.url || `data/glendale/${layer.file}.geojson` });
       m.addLayer({
         id: layer.id, type: layer.type, source: layer.id, paint: layer.paint,
         layout: { visibility: "none" }, ...(layer.filter ? { filter: layer.filter } : {}),
       }, layer.type === "circle" ? undefined : this.labelsId);
-      if (layer.popup) {
-        m.on("click", layer.id, (e) => {
-          new maplibregl.Popup({ maxWidth: "280px" }).setLngLat(e.lngLat).setHTML(layer.popup(e.features[0].properties)).addTo(m);
-        });
-        m.on("mouseenter", layer.id, () => { m.getCanvas().style.cursor = "pointer"; });
-        m.on("mouseleave", layer.id, () => { m.getCanvas().style.cursor = ""; });
-      }
     }
+    m.getCanvas().style.cursor = "crosshair";
     m.addSource("boundary", { type: "geojson", data: boundary });
     m.addLayer({ id: "boundary-glow", type: "line", source: "boundary", paint: { "line-color": "#38e1ff", "line-width": 6, "line-opacity": 0.18, "line-blur": 4 } }, this.labelsId);
     m.addLayer({ id: "boundary", type: "line", source: "boundary", paint: { "line-color": "#38e1ff", "line-width": 1.6 } }, this.labelsId);
@@ -152,7 +205,7 @@ export class GodsEyeMap {
         new maplibregl.Popup({ maxWidth: "280px" }).setLngLat(e.lngLat).setHTML(html(e.features[0].properties)).addTo(m);
       });
       m.on("mouseenter", id, () => { m.getCanvas().style.cursor = "pointer"; });
-      m.on("mouseleave", id, () => { m.getCanvas().style.cursor = ""; });
+      m.on("mouseleave", id, () => { m.getCanvas().style.cursor = "crosshair"; });
     };
     popup("quakes", (p) => `<b>M${Number(p.mag).toFixed(1)}</b> ${escapeHtml(p.place)}<br>${fmtLocal(p.ms)}<br>${p.km_to_glendale} km from Glendale · <a href="${escapeHtml(p.url)}" target="_blank" rel="noopener">USGS</a>`);
     popup("calfire", (p) => `<b>${escapeHtml(p.name)}</b><br>Started ${fmtLocal(p.ms)}<br>${p.acres ? `${Number(p.acres).toLocaleString()} acres (final)` : ""}${p.url && p.url !== "null" ? `<br><a href="${escapeHtml(p.url)}" target="_blank" rel="noopener">CAL FIRE</a>` : ""}`);
@@ -167,7 +220,7 @@ export class GodsEyeMap {
 
   setEvent(ev) {
     this.ev = ev;
-    for (const l of GLENDALE_LAYERS) this.setLayerVisible(l.id, l.kinds.includes(ev.kind));
+    this.showOnly(defaultLayers("replay", ev.kind));
 
     this.windMarkers.forEach((w) => w.marker.remove());
     this.windMarkers = [];
@@ -193,10 +246,14 @@ export class GodsEyeMap {
       features: g.filter((x) => x.lonlat).map((x) => ({ type: "Feature", geometry: { type: "Point", coordinates: x.lonlat }, properties: { id: x.id, name: x.name, cfs: 0 } })),
     });
 
+    this.fitEvent(ev);
+  }
+
+  fitEvent(ev) {
     const bounds = new maplibregl.LngLatBounds(GLENDALE_BOUNDS[0], GLENDALE_BOUNDS[1]);
     bounds.extend([ev.lon, ev.lat]);
     if (ev.perimeter) this.#eachCoord(ev.perimeter.geometry, (c) => bounds.extend(c));
-    this.map.fitBounds(bounds, { padding: { top: 90, bottom: 60, left: 60, right: 60 }, duration: 1200, maxZoom: 12.5 });
+    this.fitTo(bounds, 12.5);
   }
 
   #eachCoord(geom, fn) {

@@ -30,7 +30,59 @@ LAYERS: dict[str, tuple[tuple[str, ...], int]] = {
     "hospitals": (("NAME", "ST_NUM", "ST_DIR", "ST_NAME", "ST_TYPE"), 6),
     "schools": (("SCHOOL", "ADDRESS", "School_typ"), 6),
     "neighborhood_zones": (("NAME",), 5),
+    "zoning": (("ZONE_DISTR", "ZONE_DESC", "GPLANDESC"), 5),
+    "fire_station_districts": (("Fire_Distr",), 5),
+    "parks": (("NAME_ALF", "NAMEA_ALF"), 5),
 }
+
+
+def zone_group(district: str | None) -> str:
+    """Broad group from ZONE_DISTR (the Type field is unreliable; see GlendaleGisMcp city-sources)."""
+    d = (district or "").strip().upper()
+    first = d.split(" ")[0]
+    if first in ("ROS", "R1R", "R1"):
+        return "single_family"
+    if first == "R":
+        return "multifamily"
+    if d.startswith(("DSP", "TOD", "SFMU", "IMU R")):
+        return "mixed_use"
+    if first in ("IND", "IMU", "T"):
+        return "industrial"
+    if first == "SR":
+        return "recreation"
+    if first == "CEM":
+        return "cemetery"
+    if first.startswith("C") or first == "MS":
+        return "commercial"
+    return "other"
+
+
+# Douglas-Peucker tolerance in degrees (about 3 m), for layers that trace parcel lines.
+SIMPLIFY = {"zoning": 2.5e-5}
+_tolerance = 0.0
+
+
+def _rdp(points: list, tol: float) -> list:
+    if len(points) < 5 or tol <= 0:
+        return points
+    keep = [False] * len(points)
+    keep[0] = keep[-1] = True
+    stack = [(0, len(points) - 1)]
+    while stack:
+        a, b = stack.pop()
+        (x1, y1), (x2, y2) = points[a], points[b]
+        dx, dy = x2 - x1, y2 - y1
+        norm = (dx * dx + dy * dy) ** 0.5 or 1e-12
+        best, idx = 0.0, -1
+        for i in range(a + 1, b):
+            x, y = points[i]
+            d = abs(dy * x - dx * y + x2 * y1 - y2 * x1) / norm
+            if d > best:
+                best, idx = d, i
+        if best > tol:
+            keep[idx] = True
+            stack += [(a, idx), (idx, b)]
+    return [p for p, k in zip(points, keep) if k]
 
 
 def _round_ring(ring: list, decimals: int) -> list:
@@ -39,7 +91,11 @@ def _round_ring(ring: list, decimals: int) -> list:
         pt = [round(x, decimals), round(y, decimals)]
         if not out or out[-1] != pt:
             out.append(pt)
-    return out
+    if _tolerance <= 0 or len(out) < 8:
+        return out
+    # Closed ring: first == last, so simplify two open halves and rejoin them.
+    mid = len(out) // 2
+    return _rdp(out[: mid + 1], _tolerance) + _rdp(out[mid:], _tolerance)[1:]
 
 
 def _simplify(geom: dict, decimals: int) -> dict | None:
@@ -66,7 +122,9 @@ def main(src: Path) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     manifest = json.loads((src / "manifest.json").read_text())
     sources = {}
+    global _tolerance
     for layer_id, (keep, decimals) in LAYERS.items():
+        _tolerance = SIMPLIFY.get(layer_id, 0.0)
         data = json.loads((src / f"{layer_id}.geojson").read_text())
         features = []
         for f in data["features"]:
@@ -74,6 +132,8 @@ def main(src: Path) -> None:
             if geom is None:
                 continue
             props = {k: f["properties"].get(k) for k in keep}
+            if layer_id == "zoning":
+                props["zone_group"] = zone_group(props["ZONE_DISTR"])
             features.append({"type": "Feature", "geometry": geom, "properties": props})
         path = OUT / f"{layer_id}.geojson"
         path.write_text(json.dumps({"type": "FeatureCollection", "features": features},

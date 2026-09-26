@@ -16,14 +16,20 @@
         <p>Disaster time machine: replay what the data showed before LA's biggest events</p>
       </div>
     </div>
-    <nav id="event-tabs" class="event-tabs" aria-label="Historical events"></nav>
+    <nav id="mode-tabs" class="seg mode-tabs" aria-label="View">
+      <button type="button" data-mode="replay">Event replay</button>
+      <button type="button" data-mode="history">Fire history</button>
+      <button type="button" data-mode="zoning">Zoning &amp; exposure</button>
+    </nav>
+    <nav id="event-tabs" class="event-tabs" aria-label="Historical events" data-modes="replay"></nav>
+    <div class="spacer" data-modes="history zoning"></div>
     <button id="live-btn" class="live-btn" type="button">● Compare with today</button>
   </header>
 
   <main class="layout">
     <section class="map-wrap">
       <div id="map" role="region" aria-label="Map of Glendale and the event area"></div>
-      <div class="map-overlay top-left">
+      <div class="map-overlay top-left" data-modes="replay">
         <div id="clock" class="clock">
           <div id="clock-tminus" class="tminus">T-00:00</div>
           <div id="clock-local" class="clock-local"></div>
@@ -31,7 +37,7 @@
       </div>
       <div class="map-overlay bottom-left">
         <details id="layers-panel" class="panel layers">
-          <summary>Glendale layers</summary>
+          <summary>Map layers</summary>
           <div id="layer-toggles"></div>
           <p class="fine">Hazard zones: CAL FIRE, CGS, FEMA, DWR via
             <a href="https://github.com/HackerFund/GlendaleGisMcp" target="_blank" rel="noopener">GlendaleGisMcp</a>
@@ -41,14 +47,29 @@
     </section>
 
     <aside class="side">
-      <section class="panel event-card">
+      <section class="panel event-card" data-modes="replay">
         <div class="event-kind" id="event-kind"></div>
         <h2 id="event-name"></h2>
         <p id="event-summary"></p>
         <p id="event-glendale" class="glendale-link"></p>
       </section>
 
-      <section class="panel">
+      <section class="panel" data-modes="history">
+        <h3>Wildfires around Glendale since 1878</h3>
+        <div id="history-summary"></div>
+      </section>
+
+      <section class="panel" data-modes="zoning">
+        <h3>What's allowed where, and what it sits on</h3>
+        <div id="zoning-summary"></div>
+      </section>
+
+      <section class="panel inspector">
+        <h3>What's at this spot?</h3>
+        <div id="inspector"><p class="fine">Click anywhere on the map to see its zoning, hazard zones, fire history and nearest fire station.</p></div>
+      </section>
+
+      <section class="panel" data-modes="replay">
         <div class="panel-head">
           <h3>Readings at cursor</h3>
           <div class="seg" id="site-toggle" role="group" aria-label="Readings location">
@@ -60,12 +81,12 @@
         <div id="active-warnings" class="active-warnings"></div>
       </section>
 
-      <section class="panel">
+      <section class="panel" data-modes="replay">
         <h3>Warning signs before the event</h3>
         <ol id="precursors" class="precursors"></ol>
       </section>
 
-      <section class="panel">
+      <section class="panel" data-modes="replay">
         <h3>What Glendale can do now</h3>
         <ul id="lessons" class="lessons"></ul>
       </section>
@@ -84,7 +105,28 @@
       </section>
     </aside>
 
-    <section class="timeline">
+    <section class="timeline" data-modes="history">
+      <div class="transport">
+        <label class="year-input">From <input id="year-from" type="number" min="1878" max="2025" step="1" /></label>
+        <label class="year-input">to <input id="year-to" type="number" min="1878" max="2025" step="1" /></label>
+        <div class="seg" id="year-presets" role="group" aria-label="Year presets">
+          <button type="button" data-from="1878" data-to="2025">All</button>
+          <button type="button" data-from="1950" data-to="2025">Since 1950</button>
+          <button type="button" data-from="2000" data-to="2025">Since 2000</button>
+        </div>
+        <button id="animate-btn" type="button" class="ghost">▶ Animate</button>
+        <span class="window-label">Click a decade bar to filter. Darker overlaps = burned more often.</span>
+      </div>
+      <div class="decade-chart"><canvas id="decade-chart"></canvas></div>
+      <p class="fine data-notes">Fire perimeters: NIFC InterAgency Fire Perimeter History (to 2019) and WFIGS (2020+), clipped to a box around Glendale. The archive is incomplete, especially before 1950, and small fires are often missing. Debris-flow basins: USGS post-fire hazard assessments.</p>
+    </section>
+
+    <section class="timeline" data-modes="zoning">
+      <div id="exposure-table" class="exposure-table"></div>
+      <p id="exposure-notes" class="fine data-notes"></p>
+    </section>
+
+    <section class="timeline" data-modes="replay">
       <div class="transport">
         <button id="play-btn" type="button" class="play" aria-label="Play">▶</button>
         <div class="seg" id="speed" role="group" aria-label="Playback speed">

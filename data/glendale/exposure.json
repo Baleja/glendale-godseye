@@ -1,0 +1,159 @@
+{
+ "generated_at": "2026-09-26T21:36:05Z",
+ "method": "50 m sample grid inside the city boundary (31794 cells)",
+ "city_area_km2": 79.5,
+ "groups": {
+  "multifamily": {
+   "area_km2": 7.34,
+   "share_of_city": 0.0923,
+   "pct": {
+    "very_high_fire": 0.1206,
+    "high_or_very_high_fire": 0.1696,
+    "fema_special_flood": 0.0,
+    "dam_inundation": 0.0313,
+    "liquefaction": 0.1059,
+    "landslide": 0.0,
+    "fault_rupture": 0.0,
+    "burned_since_1950": 0.002,
+    "burned_2plus_since_1950": 0.0,
+    "burned_ever": 0.1076
+   }
+  },
+  "all": {
+   "area_km2": 79.48,
+   "share_of_city": 1.0,
+   "pct": {
+    "very_high_fire": 0.6808,
+    "high_or_very_high_fire": 0.7243,
+    "fema_special_flood": 0.0,
+    "dam_inundation": 0.0155,
+    "liquefaction": 0.1131,
+    "landslide": 0.2485,
+    "fault_rupture": 0.0116,
+    "burned_since_1950": 0.4091,
+    "burned_2plus_since_1950": 0.1315,
+    "burned_ever": 0.6457
+   }
+  },
+  "streets_unzoned": {
+   "area_km2": 11.17,
+   "share_of_city": 0.1405,
+   "pct": {
+    "very_high_fire": 0.4223,
+    "high_or_very_high_fire": 0.4951,
+    "fema_special_flood": 0.0,
+    "dam_inundation": 0.0513,
+    "liquefaction": 0.1844,
+    "landslide": 0.009,
+    "fault_rupture": 0.0054,
+    "burned_since_1950": 0.0877,
+    "burned_2plus_since_1950": 0.0058,
+    "burned_ever": 0.3664
+   }
+  },
+  "mixed_use": {
+   "area_km2": 1.76,
+   "share_of_city": 0.0221,
+   "pct": {
+    "very_high_fire": 0.0,
+    "high_or_very_high_fire": 0.0142,
+    "fema_special_flood": 0.0,
+    "dam_inundation": 0.0028,
+    "liquefaction": 0.0513,
+    "landslide": 0.0,
+    "fault_rupture": 0.0,
+    "burned_since_1950": 0.0,
+    "burned_2plus_since_1950": 0.0,
+    "burned_ever": 0.0
+   }
+  },
+  "industrial": {
+   "area_km2": 1.74,
+   "share_of_city": 0.0218,
+   "pct": {
+    "very_high_fire": 0.1081,
+    "high_or_very_high_fire": 0.1916,
+    "fema_special_flood": 0.0,
+    "dam_inundation": 0.0663,
+    "liquefaction": 0.7392,
+    "landslide": 0.0,
+    "fault_rupture": 0.0,
+    "burned_since_1950": 0.0,
+    "burned_2plus_since_1950": 0.0,
+    "burned_ever": 0.0245
+   }
+  },
+  "commercial": {
+   "area_km2": 2.28,
+   "share_of_city": 0.0287,
+   "pct": {
+    "very_high_fire": 0.1818,
+    "high_or_very_high_fire": 0.2629,
+    "fema_special_flood": 0.0,
+    "dam_inundation": 0.023,
+    "liquefaction": 0.1303,
+    "landslide": 0.0,
+    "fault_rupture": 0.0,
+    "burned_since_1950": 0.0022,
+    "burned_2plus_since_1950": 0.0,
+    "burned_ever": 0.2497
+   }
+  },
+  "cemetery": {
+   "area_km2": 0.44,
+   "share_of_city": 0.0055,
+   "pct": {
+    "very_high_fire": 0.6629,
+    "high_or_very_high_fire": 0.7771,
+    "fema_special_flood": 0.0,
+    "dam_inundation": 0.0,
+    "liquefaction": 0.0114,
+    "landslide": 0.0114,
+    "fault_rupture": 0.0,
+    "burned_since_1950": 0.0,
+    "burned_2plus_since_1950": 0.0,
+    "burned_ever": 0.0
+   }
+  },
+  "single_family": {
+   "area_km2": 26.43,
+   "share_of_city": 0.3325,
+   "pct": {
+    "very_high_fire": 0.744,
+    "high_or_very_high_fire": 0.8086,
+    "fema_special_flood": 0.0,
+    "dam_inundation": 0.0079,
+    "liquefaction": 0.124,
+    "landslide": 0.1422,
+    "fault_rupture": 0.0142,
+    "burned_since_1950": 0.2908,
+    "burned_2plus_since_1950": 0.064,
+    "burned_ever": 0.6792
+   }
+  },
+  "recreation": {
+   "area_km2": 28.34,
+   "share_of_city": 0.3565,
+   "pct": {
+    "very_high_fire": 0.9866,
+    "high_or_very_high_fire": 0.9926,
+    "fema_special_flood": 0.0,
+    "dam_inundation": 0.0017,
+    "liquefaction": 0.0423,
+    "landslide": 0.5608,
+    "fault_rupture": 0.0173,
+    "burned_since_1950": 0.841,
+    "burned_2plus_since_1950": 0.3069,
+    "burned_ever": 0.9839
+   }
+  }
+ },
+ "notes": [
+  "Approximate: shares are counts of 50 m cells.",
+  "Zoning shows what is allowed, not what is built. 'streets_unzoned' is street right-of-way and gaps between zoning polygons.",
+  "Fire hazard: CAL FIRE 2025 LRA zones. NonWildland (unzoned) is not safe from wildfire.",
+  "FEMA special flood area = SFHA_TF 'T' (A, AE, AO zones). Zone D (not studied) is not counted and is not safe.",
+  "Dam inundation shows consequences if a dam failed, not likelihood.",
+  "Burn history: NIFC perimeter archive, incomplete before 1950."
+ ]
+}

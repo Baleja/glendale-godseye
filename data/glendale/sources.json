@@ -66,6 +66,24 @@
       "agency": "City of Glendale",
       "layer_url": "https://gismap.glendaleca.gov/arcgis/rest/services/Common/NeighborhoodZones/FeatureServer/1",
       "fetched_at": "2026-09-26T02:33:02+00:00"
+    },
+    "zoning": {
+      "title": "Zoning",
+      "agency": "City of Glendale",
+      "layer_url": "https://gismap.glendaleca.gov/arcgis/rest/services/Common/Zoning/FeatureServer/2",
+      "fetched_at": "2026-09-26T02:33:03+00:00"
+    },
+    "fire_station_districts": {
+      "title": "Fire Station Districts",
+      "agency": "City of Glendale",
+      "layer_url": "https://gismap.glendaleca.gov/arcgis/rest/services/Common/FireStationDistricts/FeatureServer/0",
+      "fetched_at": "2026-09-26T02:32:53+00:00"
+    },
+    "parks": {
+      "title": "Parks",
+      "agency": "City of Glendale",
+      "layer_url": "https://gismap.glendaleca.gov/arcgis/rest/services/Common/Parks/FeatureServer/0",
+      "fetched_at": "2026-09-26T02:32:57+00:00"
     }
   }
 }
