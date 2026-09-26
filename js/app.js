@@ -7,8 +7,9 @@ import { inspect } from "./inspector.js";
 import { HistoryView } from "./history.js";
 import { ZoningView } from "./zoning.js";
 import { EnergyView } from "./energy.js";
+import { PropertyView } from "./property.js";
 
-const MODES = ["energy", "history", "zoning", "replay"];
+const MODES = ["energy", "property", "history", "zoning", "replay"];
 const DEFAULT_MODE = "energy";
 const DEFAULT_EVENT = "eaton-2025";
 
@@ -58,7 +59,13 @@ let charts;
 let historyView;
 let zoningView;
 let energyView;
+let propertyView;
 let mapReady = false;
+
+/** Checkboxes outside the layer panel that mirror a map layer. */
+const LAYER_CHECKBOXES = {
+  tract_heat: "heat-on", zip_heat: "value-on", permits_approved: "permits-approved-on", permits_started: "permits-started-on",
+};
 
 async function loadEvent(id) {
   if (!state.cache.has(id)) {
@@ -168,6 +175,8 @@ async function setMode(mode) {
   stop();
   historyView.stopAnimate();
   if (mode !== "energy") energyView.leave();
+  if (mode !== "property") propertyView.leave();
+  if (mode !== "zoning") zoningView.leave();
   state.mode = mode;
   showModeElements(mode);
   map.map.resize();
@@ -182,12 +191,17 @@ async function setMode(mode) {
     map.setEventLayersVisible(false);
     map.showOnly(defaultLayers(mode));
     history.replaceState(null, "", `#${mode}`);
-    await { history: historyView, zoning: zoningView, energy: energyView }[mode].load();
+    await { history: historyView, zoning: zoningView, energy: energyView, property: propertyView }[mode].load();
     if (mode === "zoning" && zoningView.selected) map.highlightZoneGroup(zoningView.selected);
     map.map.resize();
     map.fitTo(mode === "history" ? HISTORY_BOUNDS : GLENDALE_BOUNDS, 13);
   }
   renderLayerToggles();
+  syncLayerCheckboxes();
+}
+
+function syncLayerCheckboxes() {
+  for (const [layer, id] of Object.entries(LAYER_CHECKBOXES)) $(id).checked = map.visible.has(layer);
 }
 
 function modeFromHash() {
@@ -313,12 +327,14 @@ function bindUi() {
   $("layer-toggles").addEventListener("change", (e) => {
     const id = e.target.dataset.layer;
     if (id) map.setLayerVisible(id, e.target.checked);
-    if (id === "tract_heat") $("heat-on").checked = e.target.checked;
+    syncLayerCheckboxes();
   });
-  $("heat-on").addEventListener("change", (e) => {
-    map.setLayerVisible("tract_heat", e.target.checked);
-    renderLayerToggles();
-  });
+  for (const [layer, id] of Object.entries(LAYER_CHECKBOXES)) {
+    $(id).addEventListener("change", (e) => {
+      map.setLayerVisible(layer, e.target.checked);
+      renderLayerToggles();
+    });
+  }
   $("live-btn").addEventListener("click", async () => {
     stop();
     const all = await Promise.allSettled(state.index.map((e) => loadEvent(e.id)));
@@ -357,6 +373,19 @@ async function main() {
   zoningView = new ZoningView({
     summaryEl: $("zoning-summary"), tableEl: $("exposure-table"), notesEl: $("exposure-notes"),
     onHighlight: (group) => map.highlightZoneGroup(group),
+    onPermitYear: (year, since, counts) => map.setPermitYear(year, since, counts),
+    getMap: () => map.map,
+    permits: { yearsEl: $("permit-years"), playBtn: $("permit-play"), countEl: $("permit-count") },
+  });
+  propertyView = new PropertyView({
+    summaryEl: $("property-summary"), notesEl: $("property-notes"),
+    chartEls: [$("home-value-chart"), $("rent-chart")],
+    getMap: () => map.map,
+    onFlyTo: (bounds) => map.fitTo(bounds, 14),
+    heat: {
+      metricEl: $("value-metric"), scaleEl: $("value-scale"), yearEl: $("value-year"), ticksEl: $("value-year-ticks"),
+      yearLabel: $("value-year-label"), legendEl: $("value-legend"), playBtn: $("value-play"),
+    },
   });
   energyView = new EnergyView({
     summaryEl: $("energy-summary"), notesEl: $("energy-notes"),

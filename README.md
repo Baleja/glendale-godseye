@@ -18,14 +18,16 @@ What residents get:
 
 - **Know your bill before it arrives.** Every approved and proposed rate step, with dates and links to the source, and how Glendale compares with Burbank, Pasadena, LADWP and SCE.
 - **See your neighborhood, not just the city average.** Bills, estimated usage and utility cost burden for each of 42 census tracts, with a timeline to watch them change.
+- **See what your home is worth, and what rent costs, over time.** Zillow home values by ZIP since 2000 and rents since 2015, next to Glendale overall and LA County.
+- **See where Glendale is building.** Every housing project approved and started since 2018, as a heatmap over zoning, with how many are ADUs and how many sit in Very High fire hazard zones.
 - **Know your risk in one click.** Zoning, fire hazard, flood, dam inundation, seismic zones, burn history and the nearest fire station for any spot on the map.
 - **Learn what warning looks like.** Replays of eight LA disasters show the signals that came before, and how long before.
 
 What it is not: an alert system, a site assessment, or a bill calculator. Every view says where its numbers come from and what they can't tell you.
 
-## The four views
+## The five views
 
-**Energy & water** (the default), **Fire history**, **Zoning & exposure** and **Event replay**. Details are under [Using it](#using-it).
+**Energy & water** (the default), **$$$ Property values**, **Fire history**, **Zoning & exposure** (with housing permits) and **Event replay**. Details are under [Using it](#using-it).
 
 ## Future use cases
 
@@ -42,8 +44,9 @@ Vacant lots and empty buildings matter to residents in three ways: fire risk (un
 
 Permits show where Glendale is changing: new ADUs, apartment projects, solar and battery installs, and rebuilding after disasters.
 
-- **Housing permits on the map.** The state's Housing Element Annual Progress Reports ([data.ca.gov](https://data.ca.gov/dataset/housing-element-annual-progress-report-apr-data-by-jurisdiction-and-year)) already list Glendale's housing applications and permits with parcel number, address, coordinates, unit type (ADU, single-family, multifamily), affordability level and status. They could be mapped over zoning with a year timeline to show where new homes are actually being built compared with what zoning allows.
-- **Permits vs. hazards.** Count new units approved inside Very High fire hazard zones, liquefaction zones and dam inundation areas each year. That's a direct measure of whether growth is moving toward or away from risk.
+- **Housing permits on the map (built).** Zoning & exposure now maps every housing project from the state's Housing Element Annual Progress Reports since 2018: approvals in cyan, construction starts in orange, with a year picker. See [Using it](#using-it).
+- **Permits vs. hazards (started).** The permit panel already reports the share of approved projects in Very High fire hazard zones. Next: a year-by-year chart of new units inside fire, liquefaction and dam inundation zones, to show whether growth is moving toward or away from risk.
+- **Non-housing permits.** The state data only covers projects that add homes. Commercial, remodel and demolition permits need the city's own building permit records.
 - **Energy permits.** Solar, battery and electrification permits by neighborhood would show who is adopting clean energy as rates rise, and where rebates or outreach could help. This needs the city's building permit records, which have no public API yet; a records request or city data partnership would come first.
 - **"What can I build here?"** Pair the city's address geocoder (`Common/CAD_SiteAddress_Street/GeocodeServer`) with zoning, hazards and recent nearby permits, so a homeowner considering an ADU sees the rules, the risks and what neighbors have already built. The city's GIS terms require a clear disclaimer that this is not a legal description or survey.
 - **Rebuild tracking after a disaster.** After a fire or quake, permit activity inside the damage footprint shows how fast a neighborhood is recovering, which pairs naturally with the Event replay view.
@@ -90,6 +93,13 @@ To refresh the neighborhood heatmap (Census tract boundaries and ACS utility cos
 python3 scripts/fetch_neighborhood_costs.py
 ```
 
+To refresh home values and rents (Zillow ZIP files are streamed and filtered, under a minute) and housing permits (a few seconds):
+
+```sh
+python3 scripts/fetch_property_values.py
+python3 scripts/fetch_permits.py
+```
+
 Rate increases are hand-curated in `data/utility/rate_actions.json`, with a source link for each step. Update it when City Council adopts new rates.
 
 To refresh the fire history and debris-flow layers:
@@ -101,15 +111,19 @@ python3 scripts/compute_exposure.py
 
 ## Using it
 
-The top bar has three views. Click anywhere on the map in any view to see what the data says about that spot: zoning, fire hazard, FEMA flood zone, dam inundation, seismic zones, how many times it has burned, and the nearest Glendale fire station.
+The bar under the title switches between the five views. Click anywhere on the map in any view to see what the data says about that spot: zoning, fire hazard, FEMA flood zone, dam inundation, seismic zones, how many times it has burned, and the nearest Glendale fire station.
 
 **Fire history** (`#history`) maps about 600 wildfire perimeters around Glendale from 1878 to 2025. Overlapping burns stack darker. Pick a year range, click a decade bar, or press Animate to sweep a 10-year window through time. The side panel lists the largest fires in range (click to zoom) and links to the weather replays for La Tuna, Station and Eaton. The Eaton burn scar also shows USGS post-fire debris-flow basins.
 
 **Zoning & exposure** (`#zoning`) colors Glendale's zoning by type and shows a table of how much of each zone type sits in each hazard area, for example 74% of single-family-zoned land is Very High fire hazard and 74% of industrial land is in a liquefaction zone. Click a row or legend entry to highlight that zone type.
 
+The same view maps **housing permits** from the state's Annual Progress Reports: a cyan heatmap of projects approved and an orange one of projects where construction has started (building permit issued). Pick a year from 2018 to 2025 or "All years", or press ▶ to step through them. Zoom to street level to see each project as a dot (cyan = approved, not started; orange = under construction; gray = completed) and hover it for the address, unit type, dates and hazard zones. Since 2018, Glendale approved 1,997 housing projects (4,096 homes). 90% were ADUs, 29% are in a Very High fire hazard zone, and 499 projects (1,388 homes) are under construction now.
+
+**$$$ Property values** (`#property`) colors Glendale's ZIP codes by Zillow's typical home value (all homes, single-family or condos) or typical rent. Drag the timeline or press ▶ to go year by year from 2000 (rents from 2015). "Same scale, all years" shows values rising citywide; "Rescale each year" compares ZIPs within a year. The side panel ranks ZIPs and compares Glendale with LA County: the typical Glendale home went from about $270,000 in 2000 to $1.18 million in 2026 (+337%, vs. +301% for the county). Charts show every ZIP's value and rent history.
+
 **Energy & water** (`#energy`, the default view) tracks what Glendale pays for power and water. A heatmap colors each of Glendale's 42 census tracts by median electric bill, estimated electricity use, gas bill, water and sewer bill, or utility costs as a share of income. Drag the timeline or press ▶ to step through the Census survey periods from 2017–2021 to 2020–2024, and hover a neighborhood for all its numbers. A rate index charts every electric and water increase since 2019, with proposed steps dashed: electric is up about 42% from Jan 2024 to Nov 2027, and the proposed water plan would add about 120% from 2027 to 2031. A second chart compares Glendale's average residential price per kWh with Burbank, Pasadena, LADWP and SCE since 2015. A third shows monthly water use per person. The map pin marks the Grayson plant's 75 MW / 300 MWh battery project.
 
-**Event replay** (the default):
+**Event replay**:
 
 - Pick an event in the top bar. The replay starts 72 hours before the event.
 - Press ▶ (or Space) to play; drag the slider, click any chart, or use ← → (Shift for a day) to scrub.
@@ -149,6 +163,8 @@ Add an event by appending to `EVENTS` in `scripts/fetch_events.py` and re-runnin
 | Fire history | NIFC [InterAgency Fire Perimeter History](https://data-nifc.opendata.arcgis.com/) (to 2019) and WFIGS (2020+) | Incomplete before 1950; small fires often missing |
 | Residential electricity prices | [EIA Form 861](https://www.eia.gov/electricity/data/eia861/) sales to ultimate customers | Annual average (revenue ÷ kWh), not a tariff; bundled customers only |
 | Neighborhood bills and usage | [ACS 5-year summary files](https://www.census.gov/programs-surveys/acs/data/summary-file.html) B25132–B25134, B19013; [TIGERweb](https://tigerweb.geo.census.gov/) 2020 tracts | Self-reported bills in dollar bands; usage is an estimate scaled to GWP's EIA average |
+| Home values and rents | [Zillow Research](https://www.zillow.com/research/data/) ZHVI (all homes, single-family, condo) and ZORI by ZIP; ZIP boundaries from City of Glendale GIS | Smoothed estimates for the middle of the market, not sale or assessed prices; not inflation-adjusted |
+| Housing permits | [HCD Housing Element Annual Progress Report, Table A2](https://data.ca.gov/dataset/housing-element-annual-progress-report-apr-data-by-jurisdiction-and-year) | Housing projects only; yearly reports merged by the city's tracking ID; locations geocoded by HCD |
 | Water use | [State Water Board urban supplier reports](https://data.ca.gov/dataset/urws-conservation-supply-demand) | Monthly, self-reported by the City of Glendale |
 | Rate increases, Grayson storage | City of Glendale notices, council actions and local news | Hand-curated; sources in `data/utility/rate_actions.json` |
 | Post-fire debris flow | [USGS emergency assessments](https://www.usgs.gov/programs/landslide-hazards/science/emergency-assessment-post-fire-debris-flow-hazards) | Basin estimates only exist for fires since 2020 (Eaton here) |
@@ -160,6 +176,8 @@ Add an event by appending to `EVENTS` in `scripts/fetch_events.py` and re-runnin
 - This replays archives for learning. **It is not an alert system.** In an emergency, follow official channels: [Alert LA County](https://alertlacounty.genasys.com/portal/en/register), [Glendale Everbridge](https://www.glendaleca.gov/government/departments/fire-department/other/emergency-preparedness-response/city-wide-emergency-communications), [Genasys Protect](https://protect.genasys.com/), [MyShake](https://www.earthquake.ca.gov/get-alerts/).
 - Hazard layers are regulatory maps, not site assessments. Outside a zone doesn't mean safe. CAL FIRE "NonWildland" means unzoned, not safe, and FEMA Zone D means not studied.
 - Zoning shows what is allowed, not what is built. Exposure shares come from a 50 m sample grid and are approximate.
+- ZIP codes don't follow city lines. 91020 (Montrose) and 91214 (La Crescenta) include unincorporated LA County, and 91210 is a tiny downtown ZIP with only a few large buildings.
+- Housing permits cover only projects that add homes. "Construction started" means a building permit was issued, not that crews are on site.
 - Dam inundation areas show what would flood if a dam failed; the hazard class rates consequences, not likelihood.
 - The fire-weather score in live mode is an illustrative comparison made for this app, not an official rating.
 - Event times are approximate local reports of ignition or peak.

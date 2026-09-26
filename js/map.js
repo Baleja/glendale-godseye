@@ -23,20 +23,59 @@ const yearColorExpr = ["interpolate", ["linear"], ["get", "year"], 1878, "#6b728
  * replay mode; `modes` = other modes that turn it on.
  */
 export const HEAT_RAMP = ["#2c7bb6", "#abd9e9", "#ffffbf", "#fdae61", "#d7191c"];
+export const PERMIT_COLORS = { approved: "#38e1ff", started: "#ff9f1c", done: "#c9d3df" };
+
+/** Choropleth driven by feature state: `t` in 0..1 picks the ramp color, -1 hides the area. */
+const featureHeatPaint = (opacity) => ({
+  "fill-color": ["case", ["<", ["coalesce", ["feature-state", "t"], -1], 0], "rgba(0,0,0,0)",
+    ["interpolate", ["linear"], ["feature-state", "t"], ...HEAT_RAMP.flatMap((c, i) => [i / (HEAT_RAMP.length - 1), c])]],
+  "fill-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.9, opacity],
+  "fill-outline-color": "rgba(7,11,18,0.8)",
+});
+
+const permitIntensity = (k) => ["interpolate", ["linear"], ["zoom"], 11, 0.35 * k, 13, 0.6 * k, 15, 1.1 * k];
+/** `floor` is the density below which the layer stays transparent, so one layer can show only its cores. */
+const permitHeatPaint = (rgb, maxAlpha, spread, floor) => ({
+  "heatmap-weight": 1,
+  "heatmap-intensity": permitIntensity(1),
+  "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 11, 7 * spread, 13, 14 * spread, 15, 26 * spread],
+  "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 14, 0.95, 15.5, 0.12],
+  "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"],
+    0, `rgba(${rgb},0)`, floor, `rgba(${rgb},0)`, floor + (1 - floor) * 0.25, `rgba(${rgb},${(maxAlpha * 0.45).toFixed(2)})`,
+    floor + (1 - floor) * 0.6, `rgba(${rgb},${(maxAlpha * 0.8).toFixed(2)})`, 1, `rgba(${rgb},${maxAlpha})`],
+});
+const hexRgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(",");
 
 export const GLENDALE_LAYERS = [
   {
     id: "tract_heat", file: "tracts", promoteId: "geoid", label: "Neighborhood bills & usage (Census)", kinds: [], modes: ["energy"], swatch: "#fdae61", type: "fill",
-    paint: {
-      "fill-color": ["case", ["<", ["coalesce", ["feature-state", "t"], -1], 0], "rgba(0,0,0,0)",
-        ["interpolate", ["linear"], ["feature-state", "t"], ...HEAT_RAMP.flatMap((c, i) => [i / (HEAT_RAMP.length - 1), c])]],
-      "fill-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.9, 0.68],
-      "fill-outline-color": "rgba(7,11,18,0.8)",
-    },
+    paint: featureHeatPaint(0.68),
+  },
+  {
+    id: "zip_heat", file: "zips", promoteId: "zip", label: "Home values & rents by ZIP (Zillow)", kinds: [], modes: ["property"], swatch: "#d7191c", type: "fill",
+    paint: featureHeatPaint(0.62),
   },
   {
     id: "zoning", file: "zoning", label: "Zoning (City of Glendale)", kinds: [], modes: ["zoning"], swatch: "#f4d35e", type: "fill",
     paint: { "fill-color": zoneColorExpr, "fill-opacity": 0.55, "fill-outline-color": "rgba(7,11,18,0.6)" },
+  },
+  {
+    id: "permits_approved", file: "permits", source: "permits", label: "Housing permits approved (heatmap)", kinds: [], modes: ["zoning"], swatch: PERMIT_COLORS.approved, type: "heatmap",
+    paint: permitHeatPaint(hexRgb(PERMIT_COLORS.approved), 0.8, 1.6, 0.03),
+  },
+  {
+    id: "permits_started", file: "permits", source: "permits", label: "Construction started (heatmap)", kinds: [], modes: ["zoning"], swatch: PERMIT_COLORS.started, type: "heatmap",
+    filter: ["has", "started_year"],
+    paint: permitHeatPaint(hexRgb(PERMIT_COLORS.started), 1, 0.9, 0.3),
+  },
+  {
+    id: "permits_points", file: "permits", source: "permits", label: "Housing projects (street level)", kinds: [], modes: ["zoning"], swatch: PERMIT_COLORS.done, type: "circle", minzoom: 14,
+    paint: {
+      "circle-radius": ["interpolate", ["linear"], ["zoom"], 14, ["min", 8, ["+", 3.5, ["*", 0.4, ["get", "units"]]]], 17, ["min", 16, ["+", 7, ["*", 0.6, ["get", "units"]]]]],
+      "circle-color": ["match", ["get", "status"], "approved", PERMIT_COLORS.approved, "started", PERMIT_COLORS.started, PERMIT_COLORS.done],
+      "circle-opacity": ["interpolate", ["linear"], ["zoom"], 14, 0, 14.6, 0.95],
+      "circle-stroke-color": "#070b12", "circle-stroke-width": 1,
+    },
   },
   {
     id: "fire_history", url: "data/history/fire_perimeters.geojson", label: "Fire history 1878–2025 (NIFC)", kinds: [], modes: ["history"], swatch: "#ff9f1c", type: "fill",
@@ -148,9 +187,27 @@ export class GlendaleGridMap {
   }
 
   highlightZoneGroup(group) {
+    this.zoneGroup = group;
+    const dim = this.visible.has("permits_approved") || this.visible.has("permits_started");
     this.map.setPaintProperty("zoning", "fill-opacity", group
-      ? ["case", ["==", ["get", "zone_group"], group], 0.85, 0.12]
-      : 0.55);
+      ? ["case", ["==", ["get", "zone_group"], group], dim ? 0.45 : 0.85, dim ? 0.04 : 0.12]
+      : dim ? 0.12 : 0.55);
+  }
+
+  /**
+   * Limits the permit layers to one year, or to `since` onward when `year` is null. `counts`
+   * rescales intensity so a single year and all years both read without saturating.
+   */
+  setPermitYear(year, since, counts) {
+    for (const [id, n] of [["permits_approved", counts.approved], ["permits_started", counts.started]]) {
+      this.map.setPaintProperty(id, "heatmap-intensity", permitIntensity(Math.min(2, Math.max(0.3, 400 / Math.max(n, 1)))));
+    }
+    const inYear = (field) => (year == null
+      ? [">=", ["coalesce", ["get", field], 0], since]
+      : ["==", ["coalesce", ["get", field], 0], year]);
+    this.map.setFilter("permits_approved", inYear("approved_year"));
+    this.map.setFilter("permits_started", inYear("started_year"));
+    this.map.setFilter("permits_points", ["any", inYear("approved_year"), inYear("started_year")]);
   }
 
   fitTo(bounds, maxZoom = 13) {
@@ -163,13 +220,17 @@ export class GlendaleGridMap {
     this.labelsId = m.getStyle().layers.find((l) => l.type === "symbol")?.id;
     const boundary = await (await fetch("data/glendale/city_boundary.geojson")).json();
     for (const layer of GLENDALE_LAYERS) {
-      m.addSource(layer.id, {
-        type: "geojson", data: layer.url || `data/glendale/${layer.file}.geojson`,
-        ...(layer.promoteId ? { promoteId: layer.promoteId } : {}),
-      });
+      const source = layer.source || layer.id;
+      if (!m.getSource(source)) {
+        m.addSource(source, {
+          type: "geojson", data: layer.url || `data/glendale/${layer.file}.geojson`,
+          ...(layer.promoteId ? { promoteId: layer.promoteId } : {}),
+        });
+      }
       m.addLayer({
-        id: layer.id, type: layer.type, source: layer.id, paint: layer.paint,
+        id: layer.id, type: layer.type, source, paint: layer.paint,
         layout: { visibility: "none" }, ...(layer.filter ? { filter: layer.filter } : {}),
+        ...(layer.minzoom ? { minzoom: layer.minzoom } : {}),
       }, layer.type === "circle" ? undefined : this.labelsId);
     }
     m.getCanvas().style.cursor = "crosshair";
@@ -230,6 +291,7 @@ export class GlendaleGridMap {
   setLayerVisible(id, on) {
     this.map.setLayoutProperty(id, "visibility", on ? "visible" : "none");
     if (on) this.visible.add(id); else this.visible.delete(id);
+    if (id.startsWith("permits_")) this.highlightZoneGroup(this.zoneGroup);
   }
 
   setEvent(ev) {
