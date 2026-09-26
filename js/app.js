@@ -1,7 +1,7 @@
 import { HOUR, escapeHtml, fmtLocal, fmtShortLocal, leadLabel, tMinus } from "./util.js";
 import { activeWarnings, precursors, prepareEvent, vitals, WARNING_COLORS } from "./signals.js";
 import { ChartStack } from "./charts.js";
-import { GodsEyeMap, GLENDALE_LAYERS, GLENDALE_BOUNDS, HISTORY_BOUNDS, defaultLayers } from "./map.js";
+import { GodsEyeViewMap, GLENDALE_LAYERS, GLENDALE_BOUNDS, HISTORY_BOUNDS, defaultLayers } from "./map.js";
 import { openLive } from "./live.js";
 import { inspect } from "./inspector.js";
 import { HistoryView } from "./history.js";
@@ -369,7 +369,7 @@ async function main() {
     },
   });
   bindUi();
-  map = new GodsEyeMap("map", () => { mapReady = true; route(); }, (lngLat) => {
+  map = new GodsEyeViewMap("map", () => { mapReady = true; route(); }, (lngLat) => {
     map.markInspected(lngLat);
     inspect($("inspector"), lngLat);
   });

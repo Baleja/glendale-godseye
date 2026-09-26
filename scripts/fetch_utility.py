@@ -30,7 +30,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "utility"
-UA = "GlendaleGodsEye/0.1 (Jewel City Hacks 5 project)"
+UA = "GlendaleGodsEyeView/0.1 (Jewel City Hacks 5 project)"
 
 EIA_YEARS = range(2015, 2025)
 EIA_LATEST_URL = "https://www.eia.gov/electricity/data/eia861/zip/f861{y}.zip"

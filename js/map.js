@@ -95,7 +95,7 @@ const EMPTY = { type: "FeatureCollection", features: [] };
 export const GLENDALE_BOUNDS = [[-118.32, 34.10], [-118.18, 34.27]];
 export const HISTORY_BOUNDS = [[-118.45, 34.05], [-118.05, 34.35]];
 
-export class GodsEyeMap {
+export class GodsEyeViewMap {
   constructor(el, onReady, onInspect) {
     this.map = new maplibregl.Map({
       container: el,
