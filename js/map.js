@@ -60,7 +60,7 @@ export const GLENDALE_LAYERS = [
     id: "fault", file: "cgs_fault_zones", label: "Fault rupture zones (CGS)", kinds: ["quake"], swatch: "#ff4ecd", type: "fill",
     paint: { "fill-color": "#ff4ecd", "fill-opacity": 0.45 },  },
   {
-    id: "neighborhoods", file: "neighborhood_zones", label: "Neighborhoods", kinds: [], swatch: "#7d8ba3", type: "line",
+    id: "neighborhoods", file: "neighborhood_zones", label: "Neighborhoods", kinds: [], modes: ["energy"], swatch: "#7d8ba3", type: "line",
     paint: { "line-color": "#7d8ba3", "line-width": 0.6, "line-opacity": 0.7 },
   },
   {

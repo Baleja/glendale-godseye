@@ -20,9 +20,10 @@
       <button type="button" data-mode="replay">Event replay</button>
       <button type="button" data-mode="history">Fire history</button>
       <button type="button" data-mode="zoning">Zoning &amp; exposure</button>
+      <button type="button" data-mode="energy">Energy &amp; water</button>
     </nav>
     <nav id="event-tabs" class="event-tabs" aria-label="Historical events" data-modes="replay"></nav>
-    <div class="spacer" data-modes="history zoning"></div>
+    <div class="spacer" data-modes="history zoning energy"></div>
     <button id="live-btn" class="live-btn" type="button">● Compare with today</button>
   </header>
 
@@ -62,6 +63,11 @@
       <section class="panel" data-modes="zoning">
         <h3>What's allowed where, and what it sits on</h3>
         <div id="zoning-summary"></div>
+      </section>
+
+      <section class="panel" data-modes="energy">
+        <h3>Power and water bills in Glendale</h3>
+        <div id="energy-summary"></div>
       </section>
 
       <section class="panel inspector">
@@ -124,6 +130,15 @@
     <section class="timeline" data-modes="zoning">
       <div id="exposure-table" class="exposure-table"></div>
       <p id="exposure-notes" class="fine data-notes"></p>
+    </section>
+
+    <section class="timeline" data-modes="energy">
+      <div class="energy-charts">
+        <div><canvas id="rate-chart"></canvas></div>
+        <div><canvas id="price-chart"></canvas></div>
+        <div><canvas id="water-chart"></canvas></div>
+      </div>
+      <p id="energy-notes" class="fine data-notes"></p>
     </section>
 
     <section class="timeline" data-modes="replay">

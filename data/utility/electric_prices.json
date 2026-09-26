@@ -1,0 +1,508 @@
+{
+ "generated_at": "2026-09-26T21:55:36Z",
+ "source": "U.S. EIA Form 861, Sales to Ultimate Customers (bundled service)",
+ "source_url": "https://www.eia.gov/electricity/data/eia861/",
+ "note": "Average residential price = revenue / kWh sold, including fixed charges. Annual averages, not tariffs.",
+ "rows": [
+  {
+   "year": 2015,
+   "utility_id": "2507",
+   "utility": "Burbank (BWP)",
+   "res_cents_per_kwh": 15.81,
+   "res_avg_monthly_bill": 77.66,
+   "res_kwh_per_month": 491.1,
+   "res_customers": 46259,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2015,
+   "utility_id": "7294",
+   "utility": "Glendale (GWP)",
+   "res_cents_per_kwh": 18.76,
+   "res_avg_monthly_bill": 81.09,
+   "res_kwh_per_month": 432.1,
+   "res_customers": 73678,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2015,
+   "utility_id": "11208",
+   "utility": "Los Angeles (LADWP)",
+   "res_cents_per_kwh": 15.38,
+   "res_avg_monthly_bill": 80.65,
+   "res_kwh_per_month": 524.3,
+   "res_customers": 1315413,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2015,
+   "utility_id": "14534",
+   "utility": "Pasadena (PWP)",
+   "res_cents_per_kwh": 17.93,
+   "res_avg_monthly_bill": 88.55,
+   "res_kwh_per_month": 494.0,
+   "res_customers": 54909,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2015,
+   "utility_id": "17609",
+   "utility": "Southern California Edison",
+   "res_cents_per_kwh": 16.51,
+   "res_avg_monthly_bill": 94.48,
+   "res_kwh_per_month": 572.1,
+   "res_customers": 4375920,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2016,
+   "utility_id": "2507",
+   "utility": "Burbank (BWP)",
+   "res_cents_per_kwh": 16.16,
+   "res_avg_monthly_bill": 81.3,
+   "res_kwh_per_month": 502.9,
+   "res_customers": 46148,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2016,
+   "utility_id": "7294",
+   "utility": "Glendale (GWP)",
+   "res_cents_per_kwh": 19.45,
+   "res_avg_monthly_bill": 81.02,
+   "res_kwh_per_month": 416.5,
+   "res_customers": 74176,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2016,
+   "utility_id": "11208",
+   "utility": "Los Angeles (LADWP)",
+   "res_cents_per_kwh": 15.26,
+   "res_avg_monthly_bill": 77.94,
+   "res_kwh_per_month": 510.6,
+   "res_customers": 1322380,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2016,
+   "utility_id": "14534",
+   "utility": "Pasadena (PWP)",
+   "res_cents_per_kwh": 17.53,
+   "res_avg_monthly_bill": 83.76,
+   "res_kwh_per_month": 477.9,
+   "res_customers": 55184,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2016,
+   "utility_id": "17609",
+   "utility": "Southern California Edison",
+   "res_cents_per_kwh": 15.84,
+   "res_avg_monthly_bill": 88.59,
+   "res_kwh_per_month": 559.1,
+   "res_customers": 4401781,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2017,
+   "utility_id": "2507",
+   "utility": "Burbank (BWP)",
+   "res_cents_per_kwh": 16.51,
+   "res_avg_monthly_bill": 81.1,
+   "res_kwh_per_month": 491.1,
+   "res_customers": 46215,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2017,
+   "utility_id": "7294",
+   "utility": "Glendale (GWP)",
+   "res_cents_per_kwh": 19.96,
+   "res_avg_monthly_bill": 84.24,
+   "res_kwh_per_month": 422.0,
+   "res_customers": 74783,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2017,
+   "utility_id": "11208",
+   "utility": "Los Angeles (LADWP)",
+   "res_cents_per_kwh": 16.65,
+   "res_avg_monthly_bill": 85.72,
+   "res_kwh_per_month": 514.7,
+   "res_customers": 1329968,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2017,
+   "utility_id": "14534",
+   "utility": "Pasadena (PWP)",
+   "res_cents_per_kwh": 18.23,
+   "res_avg_monthly_bill": 89.7,
+   "res_kwh_per_month": 492.1,
+   "res_customers": 55763,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2017,
+   "utility_id": "17609",
+   "utility": "Southern California Edison",
+   "res_cents_per_kwh": 16.6,
+   "res_avg_monthly_bill": 91.99,
+   "res_kwh_per_month": 554.2,
+   "res_customers": 4362150,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2018,
+   "utility_id": "2507",
+   "utility": "Burbank (BWP)",
+   "res_cents_per_kwh": 16.57,
+   "res_avg_monthly_bill": 81.97,
+   "res_kwh_per_month": 494.7,
+   "res_customers": 46140,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2018,
+   "utility_id": "7294",
+   "utility": "Glendale (GWP)",
+   "res_cents_per_kwh": 19.83,
+   "res_avg_monthly_bill": 81.42,
+   "res_kwh_per_month": 410.6,
+   "res_customers": 75589,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2018,
+   "utility_id": "11208",
+   "utility": "Los Angeles (LADWP)",
+   "res_cents_per_kwh": 18.31,
+   "res_avg_monthly_bill": 92.11,
+   "res_kwh_per_month": 503.1,
+   "res_customers": 1338239,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2018,
+   "utility_id": "14534",
+   "utility": "Pasadena (PWP)",
+   "res_cents_per_kwh": 19.31,
+   "res_avg_monthly_bill": 91.74,
+   "res_kwh_per_month": 475.1,
+   "res_customers": 56092,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2018,
+   "utility_id": "17609",
+   "utility": "Southern California Edison",
+   "res_cents_per_kwh": 16.3,
+   "res_avg_monthly_bill": 94.54,
+   "res_kwh_per_month": 579.9,
+   "res_customers": 4357724,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2019,
+   "utility_id": "2507",
+   "utility": "Burbank (BWP)",
+   "res_cents_per_kwh": 15.81,
+   "res_avg_monthly_bill": 77.92,
+   "res_kwh_per_month": 493.0,
+   "res_customers": 46294,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2019,
+   "utility_id": "7294",
+   "utility": "Glendale (GWP)",
+   "res_cents_per_kwh": 20.06,
+   "res_avg_monthly_bill": 78.42,
+   "res_kwh_per_month": 391.0,
+   "res_customers": 76256,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2019,
+   "utility_id": "11208",
+   "utility": "Los Angeles (LADWP)",
+   "res_cents_per_kwh": 19.99,
+   "res_avg_monthly_bill": 96.94,
+   "res_kwh_per_month": 485.0,
+   "res_customers": 1349209,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2019,
+   "utility_id": "14534",
+   "utility": "Pasadena (PWP)",
+   "res_cents_per_kwh": 20.1,
+   "res_avg_monthly_bill": 92.31,
+   "res_kwh_per_month": 459.2,
+   "res_customers": 56393,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2019,
+   "utility_id": "17609",
+   "utility": "Southern California Edison",
+   "res_cents_per_kwh": 16.21,
+   "res_avg_monthly_bill": 92.89,
+   "res_kwh_per_month": 573.1,
+   "res_customers": 3593459,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2020,
+   "utility_id": "2507",
+   "utility": "Burbank (BWP)",
+   "res_cents_per_kwh": 15.83,
+   "res_avg_monthly_bill": 78.63,
+   "res_kwh_per_month": 496.6,
+   "res_customers": 46098,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2020,
+   "utility_id": "7294",
+   "utility": "Glendale (GWP)",
+   "res_cents_per_kwh": 21.08,
+   "res_avg_monthly_bill": 92.6,
+   "res_kwh_per_month": 439.3,
+   "res_customers": 76700,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2020,
+   "utility_id": "11208",
+   "utility": "Los Angeles (LADWP)",
+   "res_cents_per_kwh": 20.63,
+   "res_avg_monthly_bill": 108.96,
+   "res_kwh_per_month": 528.1,
+   "res_customers": 1354678,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2020,
+   "utility_id": "14534",
+   "utility": "Pasadena (PWP)",
+   "res_cents_per_kwh": 20.96,
+   "res_avg_monthly_bill": 107.46,
+   "res_kwh_per_month": 512.6,
+   "res_customers": 56492,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2020,
+   "utility_id": "17609",
+   "utility": "Southern California Edison",
+   "res_cents_per_kwh": 18.22,
+   "res_avg_monthly_bill": 108.71,
+   "res_kwh_per_month": 596.8,
+   "res_customers": 3432735,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2021,
+   "utility_id": "2507",
+   "utility": "Burbank (BWP)",
+   "res_cents_per_kwh": 15.9,
+   "res_avg_monthly_bill": 82.25,
+   "res_kwh_per_month": 517.4,
+   "res_customers": 46152,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2021,
+   "utility_id": "7294",
+   "utility": "Glendale (GWP)",
+   "res_cents_per_kwh": 21.73,
+   "res_avg_monthly_bill": 90.3,
+   "res_kwh_per_month": 415.6,
+   "res_customers": 76757,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2021,
+   "utility_id": "11208",
+   "utility": "Los Angeles (LADWP)",
+   "res_cents_per_kwh": 21.19,
+   "res_avg_monthly_bill": 105.73,
+   "res_kwh_per_month": 498.9,
+   "res_customers": 1367014,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2021,
+   "utility_id": "14534",
+   "utility": "Pasadena (PWP)",
+   "res_cents_per_kwh": 21.03,
+   "res_avg_monthly_bill": 100.93,
+   "res_kwh_per_month": 480.0,
+   "res_customers": 56912,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2021,
+   "utility_id": "17609",
+   "utility": "Southern California Edison",
+   "res_cents_per_kwh": 21.33,
+   "res_avg_monthly_bill": 120.54,
+   "res_kwh_per_month": 565.0,
+   "res_customers": 3373642,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2022,
+   "utility_id": "2507",
+   "utility": "Burbank (BWP)",
+   "res_cents_per_kwh": 16.01,
+   "res_avg_monthly_bill": 79.16,
+   "res_kwh_per_month": 494.6,
+   "res_customers": 46290,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2022,
+   "utility_id": "7294",
+   "utility": "Glendale (GWP)",
+   "res_cents_per_kwh": 23.32,
+   "res_avg_monthly_bill": 102.87,
+   "res_kwh_per_month": 441.1,
+   "res_customers": 76929,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2022,
+   "utility_id": "11208",
+   "utility": "Los Angeles (LADWP)",
+   "res_cents_per_kwh": 22.24,
+   "res_avg_monthly_bill": 113.49,
+   "res_kwh_per_month": 510.3,
+   "res_customers": 1389532,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2022,
+   "utility_id": "14534",
+   "utility": "Pasadena (PWP)",
+   "res_cents_per_kwh": 21.16,
+   "res_avg_monthly_bill": 106.98,
+   "res_kwh_per_month": 505.7,
+   "res_customers": 57705,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2022,
+   "utility_id": "17609",
+   "utility": "Southern California Edison",
+   "res_cents_per_kwh": 24.62,
+   "res_avg_monthly_bill": 138.35,
+   "res_kwh_per_month": 561.9,
+   "res_customers": 3339257,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2023,
+   "utility_id": "2507",
+   "utility": "Burbank (BWP)",
+   "res_cents_per_kwh": 17.12,
+   "res_avg_monthly_bill": 87.34,
+   "res_kwh_per_month": 510.1,
+   "res_customers": 46688,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2023,
+   "utility_id": "7294",
+   "utility": "Glendale (GWP)",
+   "res_cents_per_kwh": 25.08,
+   "res_avg_monthly_bill": 102.28,
+   "res_kwh_per_month": 407.9,
+   "res_customers": 77188,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2023,
+   "utility_id": "11208",
+   "utility": "Los Angeles (LADWP)",
+   "res_cents_per_kwh": 22.99,
+   "res_avg_monthly_bill": 110.41,
+   "res_kwh_per_month": 480.4,
+   "res_customers": 1400054,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2023,
+   "utility_id": "14534",
+   "utility": "Pasadena (PWP)",
+   "res_cents_per_kwh": 24.14,
+   "res_avg_monthly_bill": 111.55,
+   "res_kwh_per_month": 462.1,
+   "res_customers": 58128,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2023,
+   "utility_id": "17609",
+   "utility": "Southern California Edison",
+   "res_cents_per_kwh": 32.33,
+   "res_avg_monthly_bill": 152.92,
+   "res_kwh_per_month": 472.9,
+   "res_customers": 3182068,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2024,
+   "utility_id": "2507",
+   "utility": "Burbank (BWP)",
+   "res_cents_per_kwh": 19.25,
+   "res_avg_monthly_bill": 89.9,
+   "res_kwh_per_month": 467.0,
+   "res_customers": 46157,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2024,
+   "utility_id": "7294",
+   "utility": "Glendale (GWP)",
+   "res_cents_per_kwh": 33.81,
+   "res_avg_monthly_bill": 139.11,
+   "res_kwh_per_month": 411.4,
+   "res_customers": 77563,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2024,
+   "utility_id": "11208",
+   "utility": "Los Angeles (LADWP)",
+   "res_cents_per_kwh": 23.84,
+   "res_avg_monthly_bill": 115.63,
+   "res_kwh_per_month": 485.1,
+   "res_customers": 1410191,
+   "ba_code": "LDWP"
+  },
+  {
+   "year": 2024,
+   "utility_id": "14534",
+   "utility": "Pasadena (PWP)",
+   "res_cents_per_kwh": 25.98,
+   "res_avg_monthly_bill": 123.59,
+   "res_kwh_per_month": 475.8,
+   "res_customers": 58551,
+   "ba_code": "CISO"
+  },
+  {
+   "year": 2024,
+   "utility_id": "17609",
+   "utility": "Southern California Edison",
+   "res_cents_per_kwh": 32.43,
+   "res_avg_monthly_bill": 164.02,
+   "res_kwh_per_month": 505.8,
+   "res_customers": 3219520,
+   "ba_code": "CISO"
+  }
+ ]
+}

@@ -1,0 +1,45 @@
+{
+ "note": "Hand-curated from City of Glendale notices and local news. Percentages are system-wide averages; each customer class gets a different increase. 'proposed' steps are not final until adopted.",
+ "electric": [
+  {"effective": "2024-01-01", "pct": 14.8, "status": "in effect", "approved": "2023-11-28",
+   "detail": "First step of the 2023 cost-of-service plan. Residential bills rose about 18.7%.",
+   "source": "https://content.govdelivery.com/accounts/CAGLENDALE/bulletins/37e971e"},
+  {"effective": "2024-07-01", "pct": 11.3, "status": "in effect", "approved": "2023-11-28",
+   "detail": "Second step of the 2023 plan.",
+   "source": "https://content.govdelivery.com/accounts/CAGLENDALE/bulletins/37e971e"},
+  {"effective": "2025-11-01", "pct": 5.0, "status": "in effect", "approved": "2025-10-07",
+   "detail": "The third 11.3% step (planned for July 2025) was delayed and split over three years to fund Grayson, Scholl Canyon and solar work without breaking bond covenants.",
+   "source": "https://outlooknewspapers.com/glendalenewspress/redistributed-electric-rate-increases-approved-in-glendale/article_1e1256ad-ddf7-46ab-a8a4-0ddcd8fc2ccf.html"},
+  {"effective": "2026-11-01", "pct": 2.95, "status": "adopted", "approved": "2025-10-07",
+   "detail": "Second part of the split 11.3% step.",
+   "source": "https://www.crescentavalleyweekly.com/news/10/09/2025/glendale-electricity-rates-to-increase-over-three-years/"},
+  {"effective": "2027-11-01", "pct": 2.95, "status": "adopted", "approved": "2025-10-07",
+   "detail": "Final part of the split 11.3% step.",
+   "source": "https://www.crescentavalleyweekly.com/news/10/09/2025/glendale-electricity-rates-to-increase-over-three-years/"}
+ ],
+ "water": [
+  {"effective": "2019-01-01", "pct": 0, "status": "baseline", "detail": "Rates from the 2018 water rate study. Staff report: water rates rose 7.5% total from 2019 to 2026 while inflation was 29.2%.",
+   "source": "https://www.crescentavalleyweekly.com/news/09/03/2026/glendale-water-rates-may-increase/"},
+  {"effective": "2026-01-01", "pct": 7.5, "status": "in effect", "cumulative_since": "2019-01-01",
+   "detail": "Total of increases 2019–2026 (individual steps not itemized here).",
+   "source": "https://www.crescentavalleyweekly.com/news/09/03/2026/glendale-water-rates-may-increase/"},
+  {"effective": "2027-01-01", "pct": 53, "status": "proposed",
+   "detail": "Council adopted a water infrastructure plan in Sept 2026. About +$37/month for an average single-family home. Needs the Prop 218 notice and hearing process first; community meetings start Oct 7.",
+   "source": "https://www.crescentavalleyweekly.com/news/09/03/2026/glendale-water-rates-may-increase/"},
+  {"effective": "2028-01-01", "pct": 11, "status": "proposed", "source": "https://www.crescentavalleyweekly.com/news/09/03/2026/glendale-water-rates-may-increase/"},
+  {"effective": "2029-01-01", "pct": 10, "status": "proposed", "source": "https://www.crescentavalleyweekly.com/news/09/03/2026/glendale-water-rates-may-increase/"},
+  {"effective": "2030-01-01", "pct": 10, "status": "proposed", "source": "https://www.crescentavalleyweekly.com/news/09/03/2026/glendale-water-rates-may-increase/"},
+  {"effective": "2031-01-01", "pct": 7, "status": "proposed", "source": "https://www.crescentavalleyweekly.com/news/09/03/2026/glendale-water-rates-may-increase/"}
+ ],
+ "storage": {
+  "name": "Grayson Repowering Project",
+  "address": "800 Air Way, Glendale",
+  "battery_mw": 75, "battery_mwh": 300,
+  "engines_mw": 93,
+  "status_note": "Tesla Megapack battery plus five Wärtsilä gas engines. GWP targeted operation for summer 2026; in May 2025 the battery island was 29% complete and tariffs on batteries from China could add about $75–82 million.",
+  "sources": [
+   "https://ceqanet.lci.ca.gov/2016121048/7",
+   "https://outlooknewspapers.com/glendalenewspress/gwp-grayson-project-may-incur-82-million-in-tariffs/article_95e95d31-eb4b-4ea8-a13a-21a200433244.html"
+  ]
+ }
+}

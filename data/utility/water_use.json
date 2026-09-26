@@ -1,0 +1,1458 @@
+{
+ "generated_at": "2026-09-26T21:55:36Z",
+ "source": "State Water Resources Control Board, Urban Retail Water Supplier monthly reports (City of Glendale)",
+ "source_url": "https://data.ca.gov/dataset/urws-conservation-supply-demand",
+ "note": "Self-reported by the supplier. R-GPCD = residential gallons per person per day.",
+ "months": [
+  {
+   "month": "2014-06",
+   "r_gpcd": 109.7,
+   "potable_supply_mgal": 805.2,
+   "residential_mgal": 644.2,
+   "business_mgal": null,
+   "recycled_mgal": 61.8,
+   "shortage_level": null,
+   "population": 195800
+  },
+  {
+   "month": "2014-07",
+   "r_gpcd": 111.6,
+   "potable_supply_mgal": 846.6,
+   "residential_mgal": 677.3,
+   "business_mgal": null,
+   "recycled_mgal": 70.8,
+   "shortage_level": null,
+   "population": 195800
+  },
+  {
+   "month": "2014-08",
+   "r_gpcd": 106.3,
+   "potable_supply_mgal": 806.7,
+   "residential_mgal": 645.4,
+   "business_mgal": null,
+   "recycled_mgal": 39.3,
+   "shortage_level": null,
+   "population": 195800
+  },
+  {
+   "month": "2014-09",
+   "r_gpcd": 103.2,
+   "potable_supply_mgal": 767.4,
+   "residential_mgal": 598.6,
+   "business_mgal": null,
+   "recycled_mgal": 51.8,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2014-10",
+   "r_gpcd": 97.3,
+   "potable_supply_mgal": 719.6,
+   "residential_mgal": 582.9,
+   "business_mgal": null,
+   "recycled_mgal": 60.5,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2014-11",
+   "r_gpcd": 92.2,
+   "potable_supply_mgal": 668.2,
+   "residential_mgal": 534.6,
+   "business_mgal": null,
+   "recycled_mgal": 35.4,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2014-12",
+   "r_gpcd": 74.2,
+   "potable_supply_mgal": 556.0,
+   "residential_mgal": 444.8,
+   "business_mgal": null,
+   "recycled_mgal": 16.7,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-01",
+   "r_gpcd": 83.9,
+   "potable_supply_mgal": 613.2,
+   "residential_mgal": 502.9,
+   "business_mgal": null,
+   "recycled_mgal": 23.8,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-02",
+   "r_gpcd": 84.3,
+   "potable_supply_mgal": 563.1,
+   "residential_mgal": 456.1,
+   "business_mgal": null,
+   "recycled_mgal": 23.5,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-03",
+   "r_gpcd": 87.2,
+   "potable_supply_mgal": 653.4,
+   "residential_mgal": 522.7,
+   "business_mgal": null,
+   "recycled_mgal": 49.6,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-04",
+   "r_gpcd": 89.6,
+   "potable_supply_mgal": 649.7,
+   "residential_mgal": 519.7,
+   "business_mgal": null,
+   "recycled_mgal": 52.9,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-05",
+   "r_gpcd": 80.9,
+   "potable_supply_mgal": 613.4,
+   "residential_mgal": 484.6,
+   "business_mgal": null,
+   "recycled_mgal": 36.3,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-06",
+   "r_gpcd": 86.3,
+   "potable_supply_mgal": 625.4,
+   "residential_mgal": 500.3,
+   "business_mgal": null,
+   "recycled_mgal": 50.9,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-07",
+   "r_gpcd": 81.8,
+   "potable_supply_mgal": 628.4,
+   "residential_mgal": 490.1,
+   "business_mgal": null,
+   "recycled_mgal": 52.4,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-08",
+   "r_gpcd": 88.4,
+   "potable_supply_mgal": 679.1,
+   "residential_mgal": 529.7,
+   "business_mgal": null,
+   "recycled_mgal": 46.5,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-09",
+   "r_gpcd": 83.7,
+   "potable_supply_mgal": 630.2,
+   "residential_mgal": 485.3,
+   "business_mgal": null,
+   "recycled_mgal": 41.9,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-10",
+   "r_gpcd": 79.7,
+   "potable_supply_mgal": 612.7,
+   "residential_mgal": 477.9,
+   "business_mgal": null,
+   "recycled_mgal": 55.2,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-11",
+   "r_gpcd": 80.9,
+   "potable_supply_mgal": 593.6,
+   "residential_mgal": 468.9,
+   "business_mgal": null,
+   "recycled_mgal": 47.4,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2015-12",
+   "r_gpcd": 67.1,
+   "potable_supply_mgal": 574.8,
+   "residential_mgal": 402.3,
+   "business_mgal": null,
+   "recycled_mgal": 30.4,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-01",
+   "r_gpcd": 80.6,
+   "potable_supply_mgal": 514.0,
+   "residential_mgal": 483.1,
+   "business_mgal": null,
+   "recycled_mgal": 18.8,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-02",
+   "r_gpcd": 74.9,
+   "potable_supply_mgal": 531.2,
+   "residential_mgal": 419.6,
+   "business_mgal": null,
+   "recycled_mgal": 34.4,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-03",
+   "r_gpcd": 70.0,
+   "potable_supply_mgal": 524.3,
+   "residential_mgal": 419.4,
+   "business_mgal": null,
+   "recycled_mgal": 32.6,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-04",
+   "r_gpcd": 74.3,
+   "potable_supply_mgal": 566.6,
+   "residential_mgal": 430.6,
+   "business_mgal": null,
+   "recycled_mgal": 49.3,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-05",
+   "r_gpcd": 80.5,
+   "potable_supply_mgal": 610.4,
+   "residential_mgal": 482.2,
+   "business_mgal": null,
+   "recycled_mgal": 44.8,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-06",
+   "r_gpcd": 88.6,
+   "potable_supply_mgal": 650.3,
+   "residential_mgal": 513.7,
+   "business_mgal": null,
+   "recycled_mgal": 54.1,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-07",
+   "r_gpcd": 91.7,
+   "potable_supply_mgal": 713.3,
+   "residential_mgal": 549.3,
+   "business_mgal": null,
+   "recycled_mgal": 60.7,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-08",
+   "r_gpcd": 93.0,
+   "potable_supply_mgal": 724.0,
+   "residential_mgal": 557.5,
+   "business_mgal": null,
+   "recycled_mgal": 55.6,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-09",
+   "r_gpcd": 88.8,
+   "potable_supply_mgal": 668.9,
+   "residential_mgal": 515.1,
+   "business_mgal": null,
+   "recycled_mgal": 51.6,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-10",
+   "r_gpcd": 84.9,
+   "potable_supply_mgal": 652.0,
+   "residential_mgal": 508.5,
+   "business_mgal": null,
+   "recycled_mgal": 52.1,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-11",
+   "r_gpcd": 79.0,
+   "potable_supply_mgal": 587.1,
+   "residential_mgal": 458.0,
+   "business_mgal": null,
+   "recycled_mgal": 47.9,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2016-12",
+   "r_gpcd": 72.3,
+   "potable_supply_mgal": 548.8,
+   "residential_mgal": 433.5,
+   "business_mgal": null,
+   "recycled_mgal": 25.9,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2017-01",
+   "r_gpcd": 63.6,
+   "potable_supply_mgal": 488.4,
+   "residential_mgal": 380.9,
+   "business_mgal": null,
+   "recycled_mgal": 8.8,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2017-02",
+   "r_gpcd": 60.7,
+   "potable_supply_mgal": 421.2,
+   "residential_mgal": 328.5,
+   "business_mgal": null,
+   "recycled_mgal": 11.9,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2017-03",
+   "r_gpcd": 65.7,
+   "potable_supply_mgal": 562.2,
+   "residential_mgal": 393.5,
+   "business_mgal": null,
+   "recycled_mgal": 42.7,
+   "shortage_level": null,
+   "population": 193300
+  },
+  {
+   "month": "2017-04",
+   "r_gpcd": 81.2,
+   "potable_supply_mgal": 621.9,
+   "residential_mgal": 485.1,
+   "business_mgal": null,
+   "recycled_mgal": 70.8,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2017-05",
+   "r_gpcd": 84.3,
+   "potable_supply_mgal": 675.9,
+   "residential_mgal": 520.4,
+   "business_mgal": null,
+   "recycled_mgal": 57.5,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2017-06",
+   "r_gpcd": 89.8,
+   "potable_supply_mgal": 688.0,
+   "residential_mgal": 536.7,
+   "business_mgal": null,
+   "recycled_mgal": 71.8,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2017-07",
+   "r_gpcd": 93.4,
+   "potable_supply_mgal": 739.6,
+   "residential_mgal": 576.9,
+   "business_mgal": null,
+   "recycled_mgal": 55.4,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2017-08",
+   "r_gpcd": 92.8,
+   "potable_supply_mgal": 744.6,
+   "residential_mgal": 573.3,
+   "business_mgal": null,
+   "recycled_mgal": 63.2,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2017-09",
+   "r_gpcd": 97.1,
+   "potable_supply_mgal": 699.4,
+   "residential_mgal": 580.5,
+   "business_mgal": null,
+   "recycled_mgal": 58.8,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2017-10",
+   "r_gpcd": 89.5,
+   "potable_supply_mgal": 708.9,
+   "residential_mgal": 553.0,
+   "business_mgal": null,
+   "recycled_mgal": 49.6,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2017-11",
+   "r_gpcd": 84.4,
+   "potable_supply_mgal": 638.5,
+   "residential_mgal": 504.4,
+   "business_mgal": null,
+   "recycled_mgal": 32.1,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2017-12",
+   "r_gpcd": 83.4,
+   "potable_supply_mgal": 652.2,
+   "residential_mgal": 515.2,
+   "business_mgal": null,
+   "recycled_mgal": 31.3,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2018-01",
+   "r_gpcd": 76.3,
+   "potable_supply_mgal": 596.6,
+   "residential_mgal": 471.3,
+   "business_mgal": null,
+   "recycled_mgal": 21.4,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2018-02",
+   "r_gpcd": 78.7,
+   "potable_supply_mgal": 555.6,
+   "residential_mgal": 438.9,
+   "business_mgal": null,
+   "recycled_mgal": 24.4,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2018-03",
+   "r_gpcd": 66.5,
+   "potable_supply_mgal": 526.9,
+   "residential_mgal": 411.0,
+   "business_mgal": null,
+   "recycled_mgal": 17.6,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2018-04",
+   "r_gpcd": 78.6,
+   "potable_supply_mgal": 595.0,
+   "residential_mgal": 470.1,
+   "business_mgal": null,
+   "recycled_mgal": 36.4,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2018-05",
+   "r_gpcd": 80.9,
+   "potable_supply_mgal": 640.8,
+   "residential_mgal": 499.8,
+   "business_mgal": null,
+   "recycled_mgal": 37.2,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2018-06",
+   "r_gpcd": 87.6,
+   "potable_supply_mgal": 671.7,
+   "residential_mgal": 523.9,
+   "business_mgal": null,
+   "recycled_mgal": 39.7,
+   "shortage_level": null,
+   "population": 199248
+  },
+  {
+   "month": "2018-07",
+   "r_gpcd": 93.9,
+   "potable_supply_mgal": 767.3,
+   "residential_mgal": 590.8,
+   "business_mgal": null,
+   "recycled_mgal": 66.9,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2018-08",
+   "r_gpcd": 95.1,
+   "potable_supply_mgal": 777.4,
+   "residential_mgal": 598.6,
+   "business_mgal": null,
+   "recycled_mgal": 74.1,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2018-09",
+   "r_gpcd": 89.3,
+   "potable_supply_mgal": 697.5,
+   "residential_mgal": 544.1,
+   "business_mgal": null,
+   "recycled_mgal": 52.1,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2018-10",
+   "r_gpcd": 84.2,
+   "potable_supply_mgal": 679.8,
+   "residential_mgal": 530.3,
+   "business_mgal": null,
+   "recycled_mgal": 61.8,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2018-11",
+   "r_gpcd": 80.1,
+   "potable_supply_mgal": 625.2,
+   "residential_mgal": 487.7,
+   "business_mgal": null,
+   "recycled_mgal": 35.4,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2018-12",
+   "r_gpcd": 69.0,
+   "potable_supply_mgal": 549.9,
+   "residential_mgal": 434.5,
+   "business_mgal": null,
+   "recycled_mgal": 10.9,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2019-01",
+   "r_gpcd": 64.8,
+   "potable_supply_mgal": 516.4,
+   "residential_mgal": 407.9,
+   "business_mgal": null,
+   "recycled_mgal": 8.8,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2019-02",
+   "r_gpcd": 58.5,
+   "potable_supply_mgal": 426.1,
+   "residential_mgal": 332.4,
+   "business_mgal": null,
+   "recycled_mgal": 4.4,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2019-03",
+   "r_gpcd": 62.5,
+   "potable_supply_mgal": 504.7,
+   "residential_mgal": 393.6,
+   "business_mgal": null,
+   "recycled_mgal": 11.0,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2019-04",
+   "r_gpcd": 75.8,
+   "potable_supply_mgal": 599.2,
+   "residential_mgal": 461.4,
+   "business_mgal": null,
+   "recycled_mgal": 45.2,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2019-05",
+   "r_gpcd": 70.5,
+   "potable_supply_mgal": 576.6,
+   "residential_mgal": 444.0,
+   "business_mgal": null,
+   "recycled_mgal": 36.3,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2019-06",
+   "r_gpcd": 80.3,
+   "potable_supply_mgal": 635.3,
+   "residential_mgal": 489.2,
+   "business_mgal": null,
+   "recycled_mgal": 56.8,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2019-07",
+   "r_gpcd": 86.4,
+   "potable_supply_mgal": 715.3,
+   "residential_mgal": 543.6,
+   "business_mgal": null,
+   "recycled_mgal": 60.5,
+   "shortage_level": null,
+   "population": 203036
+  },
+  {
+   "month": "2019-08",
+   "r_gpcd": 88.6,
+   "potable_supply_mgal": 756.3,
+   "residential_mgal": 559.7,
+   "business_mgal": null,
+   "recycled_mgal": 31.9,
+   "shortage_level": null,
+   "population": 203783
+  },
+  {
+   "month": "2019-09",
+   "r_gpcd": 87.5,
+   "potable_supply_mgal": 703.5,
+   "residential_mgal": 534.7,
+   "business_mgal": null,
+   "recycled_mgal": 41.6,
+   "shortage_level": null,
+   "population": 203783
+  },
+  {
+   "month": "2019-10",
+   "r_gpcd": 83.7,
+   "potable_supply_mgal": 695.9,
+   "residential_mgal": 528.9,
+   "business_mgal": null,
+   "recycled_mgal": 107.1,
+   "shortage_level": null,
+   "population": 203783
+  },
+  {
+   "month": "2019-11",
+   "r_gpcd": 78.9,
+   "potable_supply_mgal": 618.1,
+   "residential_mgal": 482.1,
+   "business_mgal": null,
+   "recycled_mgal": 48.4,
+   "shortage_level": null,
+   "population": 203783
+  },
+  {
+   "month": "2019-12",
+   "r_gpcd": 63.2,
+   "potable_supply_mgal": 512.1,
+   "residential_mgal": 399.5,
+   "business_mgal": null,
+   "recycled_mgal": 10.4,
+   "shortage_level": null,
+   "population": 203783
+  },
+  {
+   "month": "2020-01",
+   "r_gpcd": 65.5,
+   "potable_supply_mgal": 530.8,
+   "residential_mgal": 414.0,
+   "business_mgal": null,
+   "recycled_mgal": 13.1,
+   "shortage_level": null,
+   "population": 203783
+  },
+  {
+   "month": "2020-02",
+   "r_gpcd": 72.3,
+   "potable_supply_mgal": 554.5,
+   "residential_mgal": 427.0,
+   "business_mgal": null,
+   "recycled_mgal": 34.1,
+   "shortage_level": null,
+   "population": 203783
+  },
+  {
+   "month": "2020-03",
+   "r_gpcd": 66.5,
+   "potable_supply_mgal": 525.5,
+   "residential_mgal": 420.4,
+   "business_mgal": null,
+   "recycled_mgal": 24.3,
+   "shortage_level": null,
+   "population": 203783
+  },
+  {
+   "month": "2020-04",
+   "r_gpcd": 55.7,
+   "potable_supply_mgal": 523.7,
+   "residential_mgal": 340.4,
+   "business_mgal": null,
+   "recycled_mgal": 21.1,
+   "shortage_level": null,
+   "population": 203783
+  },
+  {
+   "month": "2020-05",
+   "r_gpcd": 84.2,
+   "potable_supply_mgal": 664.5,
+   "residential_mgal": 531.6,
+   "business_mgal": null,
+   "recycled_mgal": 59.3,
+   "shortage_level": null,
+   "population": 203783
+  },
+  {
+   "month": "2020-06",
+   "r_gpcd": 87.0,
+   "potable_supply_mgal": 681.8,
+   "residential_mgal": 531.8,
+   "business_mgal": null,
+   "recycled_mgal": 72.1,
+   "shortage_level": null,
+   "population": 203783
+  },
+  {
+   "month": "2020-07",
+   "r_gpcd": 92.6,
+   "potable_supply_mgal": 746.3,
+   "residential_mgal": 582.1,
+   "business_mgal": null,
+   "recycled_mgal": 85.2,
+   "shortage_level": null,
+   "population": 202831
+  },
+  {
+   "month": "2020-08",
+   "r_gpcd": 94.2,
+   "potable_supply_mgal": 768.9,
+   "residential_mgal": 592.0,
+   "business_mgal": null,
+   "recycled_mgal": 85.1,
+   "shortage_level": null,
+   "population": 202831
+  },
+  {
+   "month": "2020-09",
+   "r_gpcd": 94.3,
+   "potable_supply_mgal": 744.9,
+   "residential_mgal": 573.6,
+   "business_mgal": null,
+   "recycled_mgal": 67.5,
+   "shortage_level": null,
+   "population": 202831
+  },
+  {
+   "month": "2020-10",
+   "r_gpcd": 88.9,
+   "potable_supply_mgal": 716.5,
+   "residential_mgal": 558.9,
+   "business_mgal": null,
+   "recycled_mgal": 61.8,
+   "shortage_level": null,
+   "population": 202831
+  },
+  {
+   "month": "2020-11",
+   "r_gpcd": 81.0,
+   "potable_supply_mgal": 632.2,
+   "residential_mgal": 493.1,
+   "business_mgal": null,
+   "recycled_mgal": 40.0,
+   "shortage_level": null,
+   "population": 202831
+  },
+  {
+   "month": "2020-12",
+   "r_gpcd": 81.0,
+   "potable_supply_mgal": 644.9,
+   "residential_mgal": 509.4,
+   "business_mgal": null,
+   "recycled_mgal": 35.3,
+   "shortage_level": null,
+   "population": 202831
+  },
+  {
+   "month": "2021-01",
+   "r_gpcd": 72.3,
+   "potable_supply_mgal": 575.8,
+   "residential_mgal": 454.9,
+   "business_mgal": null,
+   "recycled_mgal": 23.5,
+   "shortage_level": null,
+   "population": 202831
+  },
+  {
+   "month": "2021-02",
+   "r_gpcd": 71.4,
+   "potable_supply_mgal": 520.1,
+   "residential_mgal": 405.6,
+   "business_mgal": null,
+   "recycled_mgal": 28.8,
+   "shortage_level": null,
+   "population": 202831
+  },
+  {
+   "month": "2021-03",
+   "r_gpcd": 72.0,
+   "potable_supply_mgal": 580.3,
+   "residential_mgal": 452.7,
+   "business_mgal": null,
+   "recycled_mgal": 28.9,
+   "shortage_level": null,
+   "population": 202831
+  },
+  {
+   "month": "2021-04",
+   "r_gpcd": 79.4,
+   "potable_supply_mgal": 627.6,
+   "residential_mgal": 483.2,
+   "business_mgal": null,
+   "recycled_mgal": 30.0,
+   "shortage_level": null,
+   "population": 202831
+  },
+  {
+   "month": "2021-05",
+   "r_gpcd": 83.1,
+   "potable_supply_mgal": 664.7,
+   "residential_mgal": 518.5,
+   "business_mgal": null,
+   "recycled_mgal": 35.3,
+   "shortage_level": null,
+   "population": 201334
+  },
+  {
+   "month": "2021-06",
+   "r_gpcd": 88.6,
+   "potable_supply_mgal": 695.4,
+   "residential_mgal": 535.4,
+   "business_mgal": null,
+   "recycled_mgal": 69.7,
+   "shortage_level": null,
+   "population": 201334
+  },
+  {
+   "month": "2021-07",
+   "r_gpcd": 90.5,
+   "potable_supply_mgal": 742.9,
+   "residential_mgal": 564.6,
+   "business_mgal": null,
+   "recycled_mgal": 115.5,
+   "shortage_level": null,
+   "population": 201334
+  },
+  {
+   "month": "2021-08",
+   "r_gpcd": 88.9,
+   "potable_supply_mgal": 740.0,
+   "residential_mgal": 555.0,
+   "business_mgal": null,
+   "recycled_mgal": 88.3,
+   "shortage_level": null,
+   "population": 201334
+  },
+  {
+   "month": "2021-09",
+   "r_gpcd": 87.0,
+   "potable_supply_mgal": 691.1,
+   "residential_mgal": 525.3,
+   "business_mgal": null,
+   "recycled_mgal": 69.9,
+   "shortage_level": null,
+   "population": 201334
+  },
+  {
+   "month": "2021-10",
+   "r_gpcd": 79.1,
+   "potable_supply_mgal": 640.9,
+   "residential_mgal": 493.5,
+   "business_mgal": null,
+   "recycled_mgal": 45.4,
+   "shortage_level": null,
+   "population": 201334
+  },
+  {
+   "month": "2021-11",
+   "r_gpcd": 78.5,
+   "potable_supply_mgal": 610.2,
+   "residential_mgal": 474.1,
+   "business_mgal": null,
+   "recycled_mgal": 36.1,
+   "shortage_level": null,
+   "population": 201334
+  },
+  {
+   "month": "2021-12",
+   "r_gpcd": 65.0,
+   "potable_supply_mgal": 519.3,
+   "residential_mgal": 405.6,
+   "business_mgal": null,
+   "recycled_mgal": 10.5,
+   "shortage_level": null,
+   "population": 201334
+  },
+  {
+   "month": "2022-01",
+   "r_gpcd": 66.5,
+   "potable_supply_mgal": 532.6,
+   "residential_mgal": 414.9,
+   "business_mgal": null,
+   "recycled_mgal": 10.9,
+   "shortage_level": null,
+   "population": 201334
+  },
+  {
+   "month": "2022-02",
+   "r_gpcd": 73.3,
+   "potable_supply_mgal": 535.4,
+   "residential_mgal": 413.3,
+   "business_mgal": null,
+   "recycled_mgal": 25.0,
+   "shortage_level": null,
+   "population": 201334
+  },
+  {
+   "month": "2022-03",
+   "r_gpcd": 73.2,
+   "potable_supply_mgal": 596.0,
+   "residential_mgal": 457.1,
+   "business_mgal": null,
+   "recycled_mgal": 33.6,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2022-04",
+   "r_gpcd": 78.4,
+   "potable_supply_mgal": 584.7,
+   "residential_mgal": 448.5,
+   "business_mgal": null,
+   "recycled_mgal": 39.0,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 190616
+  },
+  {
+   "month": "2022-05",
+   "r_gpcd": 80.9,
+   "potable_supply_mgal": 621.0,
+   "residential_mgal": 478.2,
+   "business_mgal": null,
+   "recycled_mgal": 44.7,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 190616
+  },
+  {
+   "month": "2022-06",
+   "r_gpcd": 80.9,
+   "potable_supply_mgal": 613.8,
+   "residential_mgal": 462.8,
+   "business_mgal": null,
+   "recycled_mgal": 56.2,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 190616
+  },
+  {
+   "month": "2022-07",
+   "r_gpcd": 82.7,
+   "potable_supply_mgal": 651.0,
+   "residential_mgal": 488.9,
+   "business_mgal": null,
+   "recycled_mgal": 73.1,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 190616
+  },
+  {
+   "month": "2022-08",
+   "r_gpcd": 84.5,
+   "potable_supply_mgal": 675.1,
+   "residential_mgal": 499.6,
+   "business_mgal": null,
+   "recycled_mgal": 63.8,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 190616
+  },
+  {
+   "month": "2022-09",
+   "r_gpcd": 78.1,
+   "potable_supply_mgal": 605.1,
+   "residential_mgal": 446.6,
+   "business_mgal": null,
+   "recycled_mgal": 71.6,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 190616
+  },
+  {
+   "month": "2022-10",
+   "r_gpcd": 79.2,
+   "potable_supply_mgal": 612.9,
+   "residential_mgal": 468.2,
+   "business_mgal": null,
+   "recycled_mgal": 57.3,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 190616
+  },
+  {
+   "month": "2022-11",
+   "r_gpcd": 74.0,
+   "potable_supply_mgal": 537.3,
+   "residential_mgal": 423.4,
+   "business_mgal": null,
+   "recycled_mgal": 31.7,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 190616
+  },
+  {
+   "month": "2022-12",
+   "r_gpcd": 65.0,
+   "potable_supply_mgal": 503.9,
+   "residential_mgal": 384.0,
+   "business_mgal": null,
+   "recycled_mgal": 9.2,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 190616
+  },
+  {
+   "month": "2023-01",
+   "r_gpcd": 51.4,
+   "potable_supply_mgal": 467.8,
+   "residential_mgal": 320.6,
+   "business_mgal": 67.0,
+   "recycled_mgal": 7.3,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2023-02",
+   "r_gpcd": 48.4,
+   "potable_supply_mgal": 448.6,
+   "residential_mgal": 272.8,
+   "business_mgal": 60.1,
+   "recycled_mgal": 14.7,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2023-03",
+   "r_gpcd": 51.7,
+   "potable_supply_mgal": 451.3,
+   "residential_mgal": 322.9,
+   "business_mgal": 61.5,
+   "recycled_mgal": 7.5,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2023-04",
+   "r_gpcd": 53.8,
+   "potable_supply_mgal": 526.8,
+   "residential_mgal": 325.0,
+   "business_mgal": 72.2,
+   "recycled_mgal": 32.0,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2023-05",
+   "r_gpcd": 58.0,
+   "potable_supply_mgal": 546.6,
+   "residential_mgal": 362.2,
+   "business_mgal": 71.6,
+   "recycled_mgal": 38.0,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2023-06",
+   "r_gpcd": 59.0,
+   "potable_supply_mgal": 563.4,
+   "residential_mgal": 356.2,
+   "business_mgal": 79.2,
+   "recycled_mgal": 28.7,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2023-07",
+   "r_gpcd": 67.7,
+   "potable_supply_mgal": 665.0,
+   "residential_mgal": 422.3,
+   "business_mgal": 78.1,
+   "recycled_mgal": 48.5,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2023-08",
+   "r_gpcd": 65.2,
+   "potable_supply_mgal": 646.3,
+   "residential_mgal": 406.7,
+   "business_mgal": 92.7,
+   "recycled_mgal": 39.7,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2023-09",
+   "r_gpcd": 60.7,
+   "potable_supply_mgal": 597.5,
+   "residential_mgal": 366.6,
+   "business_mgal": 82.4,
+   "recycled_mgal": 36.7,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2023-10",
+   "r_gpcd": 58.3,
+   "potable_supply_mgal": 613.9,
+   "residential_mgal": 363.6,
+   "business_mgal": 102.3,
+   "recycled_mgal": 42.4,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2023-11",
+   "r_gpcd": 54.6,
+   "potable_supply_mgal": 561.3,
+   "residential_mgal": 329.8,
+   "business_mgal": 85.7,
+   "recycled_mgal": 26.9,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2023-12",
+   "r_gpcd": 53.9,
+   "potable_supply_mgal": 539.8,
+   "residential_mgal": 336.6,
+   "business_mgal": 89.3,
+   "recycled_mgal": 21.3,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-01",
+   "r_gpcd": 51.0,
+   "potable_supply_mgal": 500.1,
+   "residential_mgal": 318.0,
+   "business_mgal": 78.2,
+   "recycled_mgal": 8.2,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-02",
+   "r_gpcd": 46.5,
+   "potable_supply_mgal": 427.1,
+   "residential_mgal": 271.4,
+   "business_mgal": 80.2,
+   "recycled_mgal": 3.4,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-03",
+   "r_gpcd": 50.4,
+   "potable_supply_mgal": 483.5,
+   "residential_mgal": 314.8,
+   "business_mgal": 79.5,
+   "recycled_mgal": 11.8,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-04",
+   "r_gpcd": 54.2,
+   "potable_supply_mgal": 500.3,
+   "residential_mgal": 327.5,
+   "business_mgal": 87.7,
+   "recycled_mgal": 22.1,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-05",
+   "r_gpcd": 61.0,
+   "potable_supply_mgal": 575.2,
+   "residential_mgal": 380.9,
+   "business_mgal": 90.6,
+   "recycled_mgal": 36.6,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-06",
+   "r_gpcd": 71.8,
+   "potable_supply_mgal": 625.6,
+   "residential_mgal": 433.4,
+   "business_mgal": 116.0,
+   "recycled_mgal": 45.7,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-07",
+   "r_gpcd": 70.9,
+   "potable_supply_mgal": 679.8,
+   "residential_mgal": 442.5,
+   "business_mgal": 99.4,
+   "recycled_mgal": 57.4,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-08",
+   "r_gpcd": 75.3,
+   "potable_supply_mgal": 707.5,
+   "residential_mgal": 469.9,
+   "business_mgal": 111.8,
+   "recycled_mgal": 54.5,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-09",
+   "r_gpcd": 74.9,
+   "potable_supply_mgal": 664.8,
+   "residential_mgal": 452.3,
+   "business_mgal": 110.5,
+   "recycled_mgal": 49.9,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-10",
+   "r_gpcd": 72.2,
+   "potable_supply_mgal": 652.0,
+   "residential_mgal": 450.7,
+   "business_mgal": 115.0,
+   "recycled_mgal": 41.8,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-11",
+   "r_gpcd": 64.9,
+   "potable_supply_mgal": 591.3,
+   "residential_mgal": 392.0,
+   "business_mgal": 93.5,
+   "recycled_mgal": 39.4,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2024-12",
+   "r_gpcd": 60.7,
+   "potable_supply_mgal": 587.0,
+   "residential_mgal": 378.6,
+   "business_mgal": 77.2,
+   "recycled_mgal": 25.4,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2025-01",
+   "r_gpcd": 51.9,
+   "potable_supply_mgal": 577.1,
+   "residential_mgal": 323.9,
+   "business_mgal": 85.0,
+   "recycled_mgal": 21.6,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2025-02",
+   "r_gpcd": 44.8,
+   "potable_supply_mgal": 471.1,
+   "residential_mgal": 252.5,
+   "business_mgal": 95.8,
+   "recycled_mgal": 13.0,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2025-03",
+   "r_gpcd": 40.9,
+   "potable_supply_mgal": 527.6,
+   "residential_mgal": 255.1,
+   "business_mgal": 87.3,
+   "recycled_mgal": 17.1,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2025-04",
+   "r_gpcd": 50.0,
+   "potable_supply_mgal": 566.2,
+   "residential_mgal": 301.7,
+   "business_mgal": 93.5,
+   "recycled_mgal": 42.6,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2025-05",
+   "r_gpcd": 54.2,
+   "potable_supply_mgal": 614.9,
+   "residential_mgal": 338.2,
+   "business_mgal": 91.6,
+   "recycled_mgal": 42.5,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 201334
+  },
+  {
+   "month": "2025-06",
+   "r_gpcd": 51.7,
+   "potable_supply_mgal": 631.1,
+   "residential_mgal": 292.9,
+   "business_mgal": 103.9,
+   "recycled_mgal": 59.8,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2025-07",
+   "r_gpcd": 58.1,
+   "potable_supply_mgal": 676.2,
+   "residential_mgal": 339.9,
+   "business_mgal": 99.4,
+   "recycled_mgal": 54.3,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2025-08",
+   "r_gpcd": 66.7,
+   "potable_supply_mgal": 697.8,
+   "residential_mgal": 390.4,
+   "business_mgal": 111.4,
+   "recycled_mgal": 54.7,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2025-09",
+   "r_gpcd": 66.7,
+   "potable_supply_mgal": 660.8,
+   "residential_mgal": 378.0,
+   "business_mgal": 113.7,
+   "recycled_mgal": 55.9,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2025-10",
+   "r_gpcd": 61.7,
+   "potable_supply_mgal": 614.6,
+   "residential_mgal": 361.0,
+   "business_mgal": 122.2,
+   "recycled_mgal": 26.9,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2025-11",
+   "r_gpcd": 58.1,
+   "potable_supply_mgal": 526.8,
+   "residential_mgal": 329.1,
+   "business_mgal": 109.2,
+   "recycled_mgal": 15.6,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2025-12",
+   "r_gpcd": 58.3,
+   "potable_supply_mgal": 531.3,
+   "residential_mgal": 341.2,
+   "business_mgal": 84.7,
+   "recycled_mgal": 6.5,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2026-01",
+   "r_gpcd": 64.1,
+   "potable_supply_mgal": 507.7,
+   "residential_mgal": 375.1,
+   "business_mgal": 90.9,
+   "recycled_mgal": 7.3,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2026-02",
+   "r_gpcd": 55.7,
+   "potable_supply_mgal": 493.9,
+   "residential_mgal": 294.3,
+   "business_mgal": 85.0,
+   "recycled_mgal": 0.0,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2026-03",
+   "r_gpcd": 75.9,
+   "potable_supply_mgal": 575.9,
+   "residential_mgal": 444.1,
+   "business_mgal": 87.7,
+   "recycled_mgal": 43.4,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2026-04",
+   "r_gpcd": 53.2,
+   "potable_supply_mgal": 577.6,
+   "residential_mgal": 301.2,
+   "business_mgal": 97.1,
+   "recycled_mgal": 41.9,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2026-05",
+   "r_gpcd": 78.5,
+   "potable_supply_mgal": 628.6,
+   "residential_mgal": 459.1,
+   "business_mgal": 98.4,
+   "recycled_mgal": 54.1,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  },
+  {
+   "month": "2026-06",
+   "r_gpcd": 58.3,
+   "potable_supply_mgal": 642.9,
+   "residential_mgal": 330.1,
+   "business_mgal": 95.8,
+   "recycled_mgal": 50.9,
+   "shortage_level": "3 (20-29% Shortage)",
+   "population": 188784
+  }
+ ]
+}

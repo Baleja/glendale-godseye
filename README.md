@@ -28,6 +28,14 @@ python3 scripts/prepare_glendale.py /path/to/unzipped/snapshot
 python3 scripts/compute_exposure.py      # zoning × hazard table (~30 s)
 ```
 
+To refresh electricity prices and water use (about 5 minutes; EIA downloads are slow):
+
+```sh
+python3 scripts/fetch_utility.py
+```
+
+Rate increases are hand-curated in `data/utility/rate_actions.json`, with a source link for each step. Update it when City Council adopts new rates.
+
 To refresh the fire history and debris-flow layers:
 
 ```sh
@@ -42,6 +50,8 @@ The top bar has three views. Click anywhere on the map in any view to see what t
 **Fire history** (`#history`) maps about 600 wildfire perimeters around Glendale from 1878 to 2025. Overlapping burns stack darker. Pick a year range, click a decade bar, or press Animate to sweep a 10-year window through time. The side panel lists the largest fires in range (click to zoom) and links to the weather replays for La Tuna, Station and Eaton. The Eaton burn scar also shows USGS post-fire debris-flow basins.
 
 **Zoning & exposure** (`#zoning`) colors Glendale's zoning by type and shows a table of how much of each zone type sits in each hazard area, for example 74% of single-family-zoned land is Very High fire hazard and 74% of industrial land is in a liquefaction zone. Click a row or legend entry to highlight that zone type.
+
+**Energy & water** (`#energy`) tracks what Glendale pays for power and water. A rate index charts every electric and water increase since 2019, with proposed steps dashed: electric is up about 42% from Jan 2024 to Nov 2027, and the proposed water plan would add about 120% from 2027 to 2031. A second chart compares Glendale's average residential price per kWh with Burbank, Pasadena, LADWP and SCE since 2015. A third shows monthly water use per person. The map pin marks the Grayson plant's 75 MW / 300 MWh battery project.
 
 **Event replay** (the default):
 
@@ -81,6 +91,9 @@ Add an event by appending to `EVENTS` in `scripts/fetch_events.py` and re-runnin
 | Glendale hazard and city layers | [GlendaleGisMcp](https://github.com/HackerFund/GlendaleGisMcp) snapshot 2026-09-26 | Simplified to about 1 m for the browser |
 | Zoning | City of Glendale zoning via the GlendaleGisMcp snapshot | Current zoning only (no history); simplified to about 3 m |
 | Fire history | NIFC [InterAgency Fire Perimeter History](https://data-nifc.opendata.arcgis.com/) (to 2019) and WFIGS (2020+) | Incomplete before 1950; small fires often missing |
+| Residential electricity prices | [EIA Form 861](https://www.eia.gov/electricity/data/eia861/) sales to ultimate customers | Annual average (revenue ÷ kWh), not a tariff; bundled customers only |
+| Water use | [State Water Board urban supplier reports](https://data.ca.gov/dataset/urws-conservation-supply-demand) | Monthly, self-reported by the City of Glendale |
+| Rate increases, Grayson storage | City of Glendale notices, council actions and local news | Hand-curated; sources in `data/utility/rate_actions.json` |
 | Post-fire debris flow | [USGS emergency assessments](https://www.usgs.gov/programs/landslide-hazards/science/emergency-assessment-post-fire-debris-flow-hazards) | Basin estimates only exist for fires since 2020 (Eaton here) |
 | Live mode | Open-Meteo forecast, [NWS alerts API](https://www.weather.gov/documentation/services-web-api), USGS feeds | Fetched in the browser |
 | Basemap | [OpenFreeMap](https://openfreemap.org/) dark style, © OpenStreetMap | |

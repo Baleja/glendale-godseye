@@ -6,8 +6,9 @@ import { openLive } from "./live.js";
 import { inspect } from "./inspector.js";
 import { HistoryView } from "./history.js";
 import { ZoningView } from "./zoning.js";
+import { EnergyView } from "./energy.js";
 
-const MODES = ["replay", "history", "zoning"];
+const MODES = ["replay", "history", "zoning", "energy"];
 const DEFAULT_EVENT = "eaton-2025";
 
 const KIND_ICON = { fire: "🔥", flood: "🌧", quake: "〰" };
@@ -55,6 +56,7 @@ let map;
 let charts;
 let historyView;
 let zoningView;
+let energyView;
 
 async function loadEvent(id) {
   if (!state.cache.has(id)) {
@@ -163,6 +165,7 @@ function showModeElements(mode) {
 async function setMode(mode) {
   stop();
   historyView.stopAnimate();
+  if (mode !== "energy") energyView.showMarker(false);
   state.mode = mode;
   showModeElements(mode);
   map.map.resize();
@@ -177,7 +180,7 @@ async function setMode(mode) {
     map.setEventLayersVisible(false);
     map.showOnly(defaultLayers(mode));
     history.replaceState(null, "", `#${mode}`);
-    await (mode === "history" ? historyView.load() : zoningView.load());
+    await { history: historyView, zoning: zoningView, energy: energyView }[mode].load();
     if (mode === "zoning" && zoningView.selected) map.highlightZoneGroup(zoningView.selected);
     map.map.resize();
     map.fitTo(mode === "history" ? HISTORY_BOUNDS : GLENDALE_BOUNDS, 13);
@@ -331,6 +334,11 @@ async function main() {
   zoningView = new ZoningView({
     summaryEl: $("zoning-summary"), tableEl: $("exposure-table"), notesEl: $("exposure-notes"),
     onHighlight: (group) => map.highlightZoneGroup(group),
+  });
+  energyView = new EnergyView({
+    summaryEl: $("energy-summary"), notesEl: $("energy-notes"),
+    chartEls: [$("rate-chart"), $("price-chart"), $("water-chart")],
+    getMap: () => map.map,
   });
   bindUi();
   map = new GodsEyeMap("map", route, (lngLat) => {
