@@ -31,7 +31,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from compute_exposure import Index  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-UA = "GlendaleGodsEyeView/0.1 (Jewel City Hacks 5 project)"
+UA = "TheGlendaleGrid/0.1 (Jewel City Hacks 5 project)"
 YEARS = [2021, 2022, 2023, 2024]
 TIGER = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/10/query"
 ACS_SF = "https://www2.census.gov/programs-surveys/acs/summary_file/{y}/table-based-SF/data/5YRData/acsdt5y{y}-{t}.dat"

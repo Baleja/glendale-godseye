@@ -1,4 +1,4 @@
-# Glendale Gods Eye View
+# The Glendale Grid
 
 One map of what public data says about living in Glendale, California: what you pay for power and water and where it's heading, which hazards your block is mapped for, what has burned before, and what the days before LA's biggest disasters looked like.
 
@@ -6,7 +6,7 @@ One map of what public data says about living in Glendale, California: what you 
 
 Glendale households are being asked to absorb a lot at once. Glendale Water & Power raised electric rates about 42% between January 2024 and November 2027, and the city has proposed a water plan that would more than double water rates by 2031. Meanwhile about two-thirds of the city sits in a Very High fire hazard zone, the Eaton fire burned into the foothills next door in 2025, and the next large earthquake is a matter of when.
 
-The facts behind all of this are public, but they are scattered across council agendas, federal utility surveys, state hazard maps and fire archives that few residents will ever open. Glendale Gods Eye View puts them on one map, in plain language, for your neighborhood.
+The facts behind all of this are public, but they are scattered across council agendas, federal utility surveys, state hazard maps and fire archives that few residents will ever open. The Glendale Grid puts them on one map, in plain language, for your neighborhood.
 
 **Maria, a renter in the City Center**, opens the app and lands on Energy & water. Her neighborhood is blue on the electric-bill map, since apartments use less, but it turns red on "Share of income": one City Center tract spends about 6% of household income on utilities, the highest in the city. She sees the next electric step (+2.95% on November 1) and the proposed 53% water increase for January 2027 (about $37 a month for an average single-family home). She also learns that City Council, not the state, sets these rates, and that community meetings and a Prop 218 hearing come before the water vote.
 

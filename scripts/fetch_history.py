@@ -25,7 +25,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "history"
-UA = "GlendaleGodsEyeView/0.1 (Jewel City Hacks 5 project)"
+UA = "TheGlendaleGrid/0.1 (Jewel City Hacks 5 project)"
 
 # Glendale plus the foothills and neighbors that burn into it (Eaton, La Tuna, Station...).
 ENVELOPE = {"xmin": -118.45, "ymin": 34.05, "xmax": -118.05, "ymax": 34.35,

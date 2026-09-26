@@ -31,7 +31,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "events"
-UA = "GlendaleGodsEyeView/0.1 (Jewel City Hacks 5 project)"
+UA = "TheGlendaleGrid/0.1 (Jewel City Hacks 5 project)"
 
 GLENDALE = (34.1425, -118.2551)
 
