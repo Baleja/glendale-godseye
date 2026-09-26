@@ -1,6 +1,56 @@
-# Glendale God's Eye: Disaster Time Machine
+# Glendale God's Eye
 
-A "god's eye view" of Glendale, California, that replays the public data record around past Los Angeles disasters so you can watch conditions change in the days **before** each event: when NWS warnings went out, how fast humidity collapsed, when winds peaked, how long it had been since rain, how a quake sequence escalated. The goal is preparedness: learn what the lead-up looks like so the next one isn't a surprise.
+One map of what public data says about living in Glendale, California: what you pay for power and water and where it's heading, which hazards your block is mapped for, what has burned before, and what the days before LA's biggest disasters looked like.
+
+## Why this exists: the story for Glendale residents
+
+Glendale households are being asked to absorb a lot at once. Glendale Water & Power raised electric rates about 42% between January 2024 and November 2027, and the city has proposed a water plan that would more than double water rates by 2031. Meanwhile about two-thirds of the city sits in a Very High fire hazard zone, the Eaton fire burned into the foothills next door in 2025, and the next large earthquake is a matter of when.
+
+The facts behind all of this are public, but they are scattered across council agendas, federal utility surveys, state hazard maps and fire archives that few residents will ever open. God's Eye puts them on one map, in plain language, for your neighborhood.
+
+**Maria, a renter in the City Center**, opens the app and lands on Energy & water. Her neighborhood is blue on the electric-bill map, since apartments use less, but it turns red on "Share of income": one City Center tract spends about 6% of household income on utilities, the highest in the city. She sees the next electric step (+2.95% on November 1) and the proposed 53% water increase for January 2027 (about $37 a month for an average single-family home). She also learns that City Council, not the state, sets these rates, and that community meetings and a Prop 218 hearing come before the water vote.
+
+**David, a homeowner in the Verdugo foothills**, sees some of the highest electric bills in the city on his hillside. He switches to Fire history and moves a 10-year window across more than a century of fire perimeters to see how often the hills above him have burned. Then he clicks his block and gets a plain summary: zoning, fire hazard class, flood and seismic zones, how many times the spot has burned, and the nearest fire station.
+
+**A neighborhood council or CERT volunteer** uses Zoning & exposure to show that 74% of single-family-zoned land is in a Very High fire hazard zone and 74% of industrial land sits on liquefaction-prone ground. Then they play Event replay to show that before Eaton, a Red Flag Watch went out about four days ahead and the warning about two days ahead. That lead time is the case for signing people up for Alert LA County and Genasys Protect now.
+
+What residents get:
+
+- **Know your bill before it arrives.** Every approved and proposed rate step, with dates and links to the source, and how Glendale compares with Burbank, Pasadena, LADWP and SCE.
+- **See your neighborhood, not just the city average.** Bills, estimated usage and utility cost burden for each of 42 census tracts, with a timeline to watch them change.
+- **Know your risk in one click.** Zoning, fire hazard, flood, dam inundation, seismic zones, burn history and the nearest fire station for any spot on the map.
+- **Learn what warning looks like.** Replays of eight LA disasters show the signals that came before, and how long before.
+
+What it is not: an alert system, a site assessment, or a bill calculator. Every view says where its numbers come from and what they can't tell you.
+
+## The four views
+
+**Energy & water** (the default), **Fire history**, **Zoning & exposure** and **Event replay**. Details are under [Using it](#using-it).
+
+## Future use cases
+
+### Vacant properties
+
+Vacant lots and empty buildings matter to residents in three ways: fire risk (unmaintained brush and structures in the foothills), housing supply (units that could be homes) and neighborhood safety. A vacancy layer would let residents and the city see where vacancy concentrates and how it overlaps with fire hazard and zoning.
+
+- **Where vacancy is.** ACS table B25002 (occupied vs. vacant units) and B25004 (why units are vacant: for rent, for sale, seasonal, "other vacant") from the same keyless Census summary files the energy heatmap already uses, mapped by tract with the same timeline.
+- **Vacant land by parcel.** The city's live parcel layer (`Common/Zoning/FeatureServer/1`, about 54,000 parcels with a land-use type) and the LA County Assessor's parcel data (use codes and land vs. improvement values) identify vacant lots. Querying one parcel at a time on click, as the GlendaleGisMcp notes recommend, keeps the city's server load low.
+- **Vacant and at risk.** Combine vacant parcels with Very High fire hazard and burn history to flag lots where brush clearance matters most. This could support the fire department's weed-abatement inspections or a resident "report an overgrown lot" flow.
+- **Postal vacancy trends.** HUD's quarterly USPS vacancy data (free registration required) would add a more current, quarterly signal than the 5-year Census averages.
+
+### Permitting
+
+Permits show where Glendale is changing: new ADUs, apartment projects, solar and battery installs, and rebuilding after disasters.
+
+- **Housing permits on the map.** The state's Housing Element Annual Progress Reports ([data.ca.gov](https://data.ca.gov/dataset/housing-element-annual-progress-report-apr-data-by-jurisdiction-and-year)) already list Glendale's housing applications and permits with parcel number, address, coordinates, unit type (ADU, single-family, multifamily), affordability level and status. They could be mapped over zoning with a year timeline to show where new homes are actually being built compared with what zoning allows.
+- **Permits vs. hazards.** Count new units approved inside Very High fire hazard zones, liquefaction zones and dam inundation areas each year. That's a direct measure of whether growth is moving toward or away from risk.
+- **Energy permits.** Solar, battery and electrification permits by neighborhood would show who is adopting clean energy as rates rise, and where rebates or outreach could help. This needs the city's building permit records, which have no public API yet; a records request or city data partnership would come first.
+- **"What can I build here?"** Pair the city's address geocoder (`Common/CAD_SiteAddress_Street/GeocodeServer`) with zoning, hazards and recent nearby permits, so a homeowner considering an ADU sees the rules, the risks and what neighbors have already built. The city's GIS terms require a clear disclaimer that this is not a legal description or survey.
+- **Rebuild tracking after a disaster.** After a fire or quake, permit activity inside the damage footprint shows how fast a neighborhood is recovering, which pairs naturally with the Event replay view.
+
+## Background
+
+The project started as a disaster time machine: replay the public data record around past Los Angeles disasters so you can watch conditions change in the days **before** each event (when NWS warnings went out, how fast humidity collapsed, when winds peaked, how long it had been since rain, how a quake sequence escalated) and learn what the lead-up looks like so the next one isn't a surprise.
 
 Built for Jewel City Hacks 5 on top of the [GlendaleGisMcp](https://github.com/HackerFund/GlendaleGisMcp) hazard snapshot and the feeds listed in its [real-time sources guide](https://github.com/HackerFund/GlendaleGisMcp/blob/main/docs/real-time-sources.md).
 
@@ -34,6 +84,12 @@ To refresh electricity prices and water use (about 5 minutes; EIA downloads are 
 python3 scripts/fetch_utility.py
 ```
 
+To refresh the neighborhood heatmap (Census tract boundaries and ACS utility costs, about 1 minute, no API key):
+
+```sh
+python3 scripts/fetch_neighborhood_costs.py
+```
+
 Rate increases are hand-curated in `data/utility/rate_actions.json`, with a source link for each step. Update it when City Council adopts new rates.
 
 To refresh the fire history and debris-flow layers:
@@ -51,7 +107,7 @@ The top bar has three views. Click anywhere on the map in any view to see what t
 
 **Zoning & exposure** (`#zoning`) colors Glendale's zoning by type and shows a table of how much of each zone type sits in each hazard area, for example 74% of single-family-zoned land is Very High fire hazard and 74% of industrial land is in a liquefaction zone. Click a row or legend entry to highlight that zone type.
 
-**Energy & water** (`#energy`) tracks what Glendale pays for power and water. A rate index charts every electric and water increase since 2019, with proposed steps dashed: electric is up about 42% from Jan 2024 to Nov 2027, and the proposed water plan would add about 120% from 2027 to 2031. A second chart compares Glendale's average residential price per kWh with Burbank, Pasadena, LADWP and SCE since 2015. A third shows monthly water use per person. The map pin marks the Grayson plant's 75 MW / 300 MWh battery project.
+**Energy & water** (`#energy`, the default view) tracks what Glendale pays for power and water. A heatmap colors each of Glendale's 42 census tracts by median electric bill, estimated electricity use, gas bill, water and sewer bill, or utility costs as a share of income. Drag the timeline or press ▶ to step through the Census survey periods from 2017–2021 to 2020–2024, and hover a neighborhood for all its numbers. A rate index charts every electric and water increase since 2019, with proposed steps dashed: electric is up about 42% from Jan 2024 to Nov 2027, and the proposed water plan would add about 120% from 2027 to 2031. A second chart compares Glendale's average residential price per kWh with Burbank, Pasadena, LADWP and SCE since 2015. A third shows monthly water use per person. The map pin marks the Grayson plant's 75 MW / 300 MWh battery project.
 
 **Event replay** (the default):
 
@@ -92,6 +148,7 @@ Add an event by appending to `EVENTS` in `scripts/fetch_events.py` and re-runnin
 | Zoning | City of Glendale zoning via the GlendaleGisMcp snapshot | Current zoning only (no history); simplified to about 3 m |
 | Fire history | NIFC [InterAgency Fire Perimeter History](https://data-nifc.opendata.arcgis.com/) (to 2019) and WFIGS (2020+) | Incomplete before 1950; small fires often missing |
 | Residential electricity prices | [EIA Form 861](https://www.eia.gov/electricity/data/eia861/) sales to ultimate customers | Annual average (revenue ÷ kWh), not a tariff; bundled customers only |
+| Neighborhood bills and usage | [ACS 5-year summary files](https://www.census.gov/programs-surveys/acs/data/summary-file.html) B25132–B25134, B19013; [TIGERweb](https://tigerweb.geo.census.gov/) 2020 tracts | Self-reported bills in dollar bands; usage is an estimate scaled to GWP's EIA average |
 | Water use | [State Water Board urban supplier reports](https://data.ca.gov/dataset/urws-conservation-supply-demand) | Monthly, self-reported by the City of Glendale |
 | Rate increases, Grayson storage | City of Glendale notices, council actions and local news | Hand-curated; sources in `data/utility/rate_actions.json` |
 | Post-fire debris flow | [USGS emergency assessments](https://www.usgs.gov/programs/landslide-hazards/science/emergency-assessment-post-fire-debris-flow-hazards) | Basin estimates only exist for fires since 2020 (Eaton here) |
