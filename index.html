@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Glendale God's Eye: Disaster Time Machine</title>
+  <link rel="stylesheet" href="vendor/maplibre-gl.css" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <div>
+        <h1>GLENDALE GOD'S EYE</h1>
+        <p>Disaster time machine: replay what the data showed before LA's biggest events</p>
+      </div>
+    </div>
+    <nav id="event-tabs" class="event-tabs" aria-label="Historical events"></nav>
+    <button id="live-btn" class="live-btn" type="button">● Compare with today</button>
+  </header>
+
+  <main class="layout">
+    <section class="map-wrap">
+      <div id="map" role="region" aria-label="Map of Glendale and the event area"></div>
+      <div class="map-overlay top-left">
+        <div id="clock" class="clock">
+          <div id="clock-tminus" class="tminus">T-00:00</div>
+          <div id="clock-local" class="clock-local"></div>
+        </div>
+      </div>
+      <div class="map-overlay bottom-left">
+        <details id="layers-panel" class="panel layers">
+          <summary>Glendale layers</summary>
+          <div id="layer-toggles"></div>
+          <p class="fine">Hazard zones: CAL FIRE, CGS, FEMA, DWR via
+            <a href="https://github.com/HackerFund/GlendaleGisMcp" target="_blank" rel="noopener">GlendaleGisMcp</a>
+            snapshot. Regulatory maps, not site assessments.</p>
+        </details>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="panel event-card">
+        <div class="event-kind" id="event-kind"></div>
+        <h2 id="event-name"></h2>
+        <p id="event-summary"></p>
+        <p id="event-glendale" class="glendale-link"></p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h3>Readings at cursor</h3>
+          <div class="seg" id="site-toggle" role="group" aria-label="Readings location">
+            <button type="button" data-site="event">Event site</button>
+            <button type="button" data-site="glendale">Glendale</button>
+          </div>
+        </div>
+        <div id="vitals" class="vitals"></div>
+        <div id="active-warnings" class="active-warnings"></div>
+      </section>
+
+      <section class="panel">
+        <h3>Warning signs before the event</h3>
+        <ol id="precursors" class="precursors"></ol>
+      </section>
+
+      <section class="panel">
+        <h3>What Glendale can do now</h3>
+        <ul id="lessons" class="lessons"></ul>
+      </section>
+
+      <section class="panel official">
+        <h3>Official alerts: sign up before you need them</h3>
+        <ul>
+          <li><a href="https://alertlacounty.genasys.com/portal/en/register" target="_blank" rel="noopener">Alert LA County</a></li>
+          <li><a href="https://www.glendaleca.gov/government/departments/fire-department/other/emergency-preparedness-response/city-wide-emergency-communications" target="_blank" rel="noopener">Glendale Everbridge alerts</a></li>
+          <li><a href="https://protect.genasys.com/" target="_blank" rel="noopener">Genasys Protect: know your evacuation zone</a></li>
+          <li><a href="https://www.earthquake.ca.gov/get-alerts/" target="_blank" rel="noopener">MyShake earthquake early warning</a></li>
+          <li><a href="https://www.weather.gov/lox/" target="_blank" rel="noopener">NWS Los Angeles</a> ·
+              <a href="https://www.fire.ca.gov/incidents" target="_blank" rel="noopener">CAL FIRE incidents</a></li>
+        </ul>
+        <p class="fine">This app replays archived data for learning. It is not an alert system. In an emergency, follow official instructions.</p>
+      </section>
+    </aside>
+
+    <section class="timeline">
+      <div class="transport">
+        <button id="play-btn" type="button" class="play" aria-label="Play">▶</button>
+        <div class="seg" id="speed" role="group" aria-label="Playback speed">
+          <button type="button" data-speed="1">1h/s</button>
+          <button type="button" data-speed="6">6h/s</button>
+          <button type="button" data-speed="24">1d/s</button>
+        </div>
+        <button id="jump-event" type="button" class="ghost">Jump to event</button>
+        <input id="scrubber" type="range" min="0" max="1000" value="0" aria-label="Time" />
+        <span id="window-label" class="window-label"></span>
+      </div>
+      <div id="charts" class="charts"></div>
+      <p id="data-notes" class="fine data-notes"></p>
+    </section>
+  </main>
+
+  <dialog id="live-dialog" class="live-dialog">
+    <form method="dialog" class="live-head">
+      <h2>Today in Glendale vs. the days before past disasters</h2>
+      <button type="submit" class="ghost" aria-label="Close">✕</button>
+    </form>
+    <div id="live-body">Loading live data…</div>
+  </dialog>
+
+  <script src="vendor/maplibre-gl.js"></script>
+  <script src="vendor/chart.umd.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

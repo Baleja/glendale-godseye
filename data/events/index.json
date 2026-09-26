@@ -1,0 +1,58 @@
+[
+  {
+    "id": "la-tuna-2017",
+    "name": "La Tuna Fire",
+    "kind": "fire",
+    "time": "2017-09-01T20:26:00Z",
+    "summary": "Burned about 7,200 acres of the Verdugo Mountains during a record heat wave, the largest fire by acreage in Los Angeles city history at the time. Evacuations reached Glendale, Burbank and Tujunga, and the 210 Freeway closed."
+  },
+  {
+    "id": "station-2009",
+    "name": "Station Fire",
+    "kind": "fire",
+    "time": "2009-08-26T22:30:00Z",
+    "summary": "Started along Angeles Crest Highway above La Ca\u00f1ada Flintridge and burned about 160,000 acres, the largest fire in Los Angeles County's modern history. Two firefighters died. The burn scar produced destructive debris flows the next winter."
+  },
+  {
+    "id": "eaton-2025",
+    "name": "Eaton Fire",
+    "kind": "fire",
+    "time": "2025-01-08T02:18:00Z",
+    "summary": "Ignited in Eaton Canyon during an extreme Santa Ana wind event after months without rain. It destroyed more than 9,000 structures in Altadena and Pasadena and killed at least 17 people."
+  },
+  {
+    "id": "palisades-2025",
+    "name": "Palisades Fire",
+    "kind": "fire",
+    "time": "2025-01-07T18:30:00Z",
+    "summary": "Started the same morning as the Eaton Fire, in the Santa Monica Mountains above Pacific Palisades. Driven by the same winds, it destroyed nearly 7,000 structures and burned about 23,000 acres."
+  },
+  {
+    "id": "storm-2024-02",
+    "name": "February 2024 Atmospheric River",
+    "kind": "flood",
+    "time": "2024-02-05T00:00:00Z",
+    "summary": "A slow-moving atmospheric river dropped about 10 inches of rain on parts of Los Angeles over three days, with hundreds of mudslides, flash flooding and debris flows in the hills."
+  },
+  {
+    "id": "hilary-2023",
+    "name": "Tropical Storm Hilary + Ojai Quake",
+    "kind": "flood",
+    "time": "2023-08-20T21:00:00Z",
+    "summary": "The first tropical storm warning ever issued for Southern California. Hilary brought record August rain, and a magnitude 5.1 earthquake struck near Ojai while the storm was overhead: two hazards at once."
+  },
+  {
+    "id": "northridge-1994",
+    "name": "Northridge Earthquake",
+    "kind": "quake",
+    "time": "1994-01-17T12:30:55Z",
+    "summary": "Magnitude 6.7 under the San Fernando Valley at 4:30 AM. 57 people died, freeways collapsed, and damage topped $20 billion, one of the costliest disasters in US history."
+  },
+  {
+    "id": "ridgecrest-2019",
+    "name": "Ridgecrest Earthquakes",
+    "kind": "quake",
+    "time": "2019-07-06T03:19:53Z",
+    "summary": "A magnitude 6.4 on July 4 turned out to be the foreshock of a magnitude 7.1 34 hours later, the largest California earthquake in 20 years. Shaking was felt across Los Angeles."
+  }
+]

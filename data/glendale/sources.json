@@ -1,0 +1,71 @@
+{
+  "snapshot_built_at": "2026-09-26T02:33:13+00:00",
+  "layers": {
+    "city_boundary": {
+      "title": "Glendale City Boundary",
+      "agency": "City of Glendale",
+      "layer_url": "https://gismap.glendaleca.gov/arcgis/rest/services/Common/Glendale_City_Boundary/MapServer/0",
+      "fetched_at": "2026-09-26T02:32:51+00:00"
+    },
+    "calfire_fhsz_lra": {
+      "title": "Fire Hazard Severity Zones (Local Responsibility Area, 2025)",
+      "agency": "CAL FIRE",
+      "layer_url": "https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/FHSALRA25_v1_All/FeatureServer/0",
+      "fetched_at": "2026-09-26T02:32:11+00:00"
+    },
+    "fema_flood_zones": {
+      "title": "FEMA National Flood Hazard Layer: Flood Hazard Zones",
+      "agency": "FEMA",
+      "layer_url": "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28",
+      "fetched_at": "2026-09-26T02:32:18+00:00"
+    },
+    "cgs_fault_zones": {
+      "title": "Alquist-Priolo Earthquake Fault Zones",
+      "agency": "California Geological Survey",
+      "layer_url": "https://services2.arcgis.com/zr3KAIbsRSUyARHG/arcgis/rest/services/CGS_Alquist_Priolo_Fault_Zones/FeatureServer/0",
+      "fetched_at": "2026-09-26T02:32:14+00:00"
+    },
+    "cgs_liquefaction_zones": {
+      "title": "Seismic Hazard Zones: Liquefaction",
+      "agency": "California Geological Survey",
+      "layer_url": "https://services2.arcgis.com/zr3KAIbsRSUyARHG/arcgis/rest/services/CGS_Liquefaction_Zones/FeatureServer/0",
+      "fetched_at": "2026-09-26T02:32:14+00:00"
+    },
+    "cgs_landslide_zones": {
+      "title": "Seismic Hazard Zones: Earthquake-Induced Landslide",
+      "agency": "California Geological Survey",
+      "layer_url": "https://services2.arcgis.com/zr3KAIbsRSUyARHG/arcgis/rest/services/CGS_Landslide_Zones/FeatureServer/0",
+      "fetched_at": "2026-09-26T02:32:15+00:00"
+    },
+    "dwr_dam_inundation": {
+      "title": "Dam Inundation Areas (DSOD-approved)",
+      "agency": "California DWR, Division of Safety of Dams",
+      "layer_url": "https://services.arcgis.com/aa38u6OgfNoCkTJ6/arcgis/rest/services/Approved_InundationBoundaries_As_of_Oct01_2025/FeatureServer/100",
+      "fetched_at": "2026-09-26T02:32:21+00:00"
+    },
+    "fire_stations": {
+      "title": "Fire Stations",
+      "agency": "City of Glendale",
+      "layer_url": "https://gismap.glendaleca.gov/arcgis/rest/services/Common/FireStations/FeatureServer/0",
+      "fetched_at": "2026-09-26T02:32:51+00:00"
+    },
+    "hospitals": {
+      "title": "Hospitals",
+      "agency": "City of Glendale",
+      "layer_url": "https://gismap.glendaleca.gov/arcgis/rest/services/Common/GlendaleHospitals/FeatureServer/0",
+      "fetched_at": "2026-09-26T02:32:55+00:00"
+    },
+    "schools": {
+      "title": "Schools",
+      "agency": "City of Glendale",
+      "layer_url": "https://gismap.glendaleca.gov/arcgis/rest/services/Common/GlendaleSchools/FeatureServer/0",
+      "fetched_at": "2026-09-26T02:32:55+00:00"
+    },
+    "neighborhood_zones": {
+      "title": "Neighborhood Zones",
+      "agency": "City of Glendale",
+      "layer_url": "https://gismap.glendaleca.gov/arcgis/rest/services/Common/NeighborhoodZones/FeatureServer/1",
+      "fetched_at": "2026-09-26T02:33:02+00:00"
+    }
+  }
+}
