@@ -36,7 +36,7 @@ async function load() {
 const row = (label, html, level = "") => `<div class="insp-row ${level}"><span>${label}</span><div>${html}</div></div>`;
 const note = (t) => `<div class="insp-note">${t}</div>`;
 
-/** Renders what the data says about one point into `el`. */
+/** Renders what the data says about one point into `el`. Returns the neighborhood name, or null outside the city. */
 export async function inspect(el, lngLat) {
   el.innerHTML = '<p class="fine">Checking every layer at this spot…</p>';
   let d;
@@ -116,6 +116,7 @@ export async function inspect(el, lngLat) {
 
   html.push(note('Regulatory maps, not a site assessment. Find your evacuation zone on <a href="https://protect.genasys.com/" target="_blank" rel="noopener">Genasys Protect</a>.'));
   el.innerHTML = html.join("");
+  return inCity ? hood || "Glendale" : null;
 }
 
 function isNearGlendale(lon, lat) {

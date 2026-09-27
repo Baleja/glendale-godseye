@@ -25,6 +25,27 @@ const fracYear = (iso) => {
 };
 const fmtDate = (iso) => new Date(`${iso}T00:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
+/** GWP standard residential electric rate (schedule R-1), as published on glendaleca.gov. */
+const GWP_TARIFF = {
+  url: "https://www.glendaleca.gov/government/departments/glendale-water-and-power/rates/residential-electric-rates",
+  perDay: 0.75,
+  tierKwhPerDay: 10,
+  high: [0.3071, 0.3806, 0.4547],
+  low: [0.2575, 0.3189, 0.3935],
+};
+
+/** Energy charge + customer charge for one billing period, before taxes and surcharges. */
+export function gwpBill(kwh, days, season) {
+  const rates = GWP_TARIFF[season];
+  const tier = GWP_TARIFF.tierKwhPerDay * days;
+  const t1 = Math.min(kwh, tier);
+  const t2 = Math.min(Math.max(kwh - tier, 0), tier);
+  const t3 = Math.max(kwh - 2 * tier, 0);
+  return t1 * rates[0] + t2 * rates[1] + t3 * rates[2] + GWP_TARIFF.perDay * days;
+}
+
+const TOPIC_LABEL = { bills: "Bills", rates: "Rates", outages: "Outages", grid: "Grid & solar" };
+
 async function getJson(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);
@@ -75,6 +96,7 @@ export class EnergyView {
       this.#initHeat();
       this.#renderSummary();
       this.#buildCharts();
+      this.#loadCommunity();
       this.notesEl.innerHTML = [
         `Neighborhood heatmap: ${escapeHtml(this.costs.source)}. ${this.costs.notes.map(escapeHtml).join(" ")}`,
         `Rates: ${escapeHtml(this.rates.note)}`,
@@ -253,10 +275,35 @@ export class EnergyView {
     const neighbors = this.electric.rows.filter((r) => r.year === last.year).sort((a, b) => b.res_cents_per_kwh - a.res_cents_per_kwh);
     const latestWater = this.water.months.at(-1);
     const s = this.rates.storage;
+    const census = this.#medianBill(this.years.at(-1));
+    const censusFirst = this.#medianBill(this.years[0]);
+    this.facts = {
+      bill: `$${Math.round(census)}`,
+      billChange: `${census >= censusFirst ? "+" : ""}${Math.round((census / censusFirst - 1) * 100)}%`,
+      rateTotal: `${Math.round(elecTotal)}%`,
+    };
 
     this.summaryEl.innerHTML = `
       <div id="heat-rank"></div>
       <p class="fine">Hover a neighborhood on the map for all its numbers. Use the timeline below to step through survey periods.</p>
+      <section id="bill-check" class="bill-check">
+        <h4 class="sub">Check your bill</h4>
+        <p class="fine">GWP bills every two months. What a typical monthly electric bill looks like, by source:</p>
+        <table class="source-table">
+          <tr><td>Census survey, typical neighborhood (${escapeHtml(this.costs.years[this.years.at(-1)].span)})</td><td><b>$${Math.round(census)}</b>/mo</td></tr>
+          <tr><td>EIA utility filings, GWP average (${last.year}, ${Math.round(last.res_kwh_per_month)} kWh)</td><td><b>$${Math.round(last.res_avg_monthly_bill)}</b>/mo</td></tr>
+          <tr><td>GWP published rates at ${Math.round(last.res_kwh_per_month)} kWh, summer / rest of year</td><td><b>$${Math.round(gwpBill(last.res_kwh_per_month * 2, 60, "high") / 2)}</b> / $${Math.round(gwpBill(last.res_kwh_per_month * 2, 60, "low") / 2)}</td></tr>
+          <tr><td>r/glendale residents, apartments to 3-bedroom homes</td><td><b>$85–$325</b>/mo</td></tr>
+          <tr><td><a href="https://www.energysage.com/local-data/electricity-cost/ca/los-angeles-county/glendale/" target="_blank" rel="noopener">EnergySage</a> (people shopping for solar, larger homes)</td><td><b>$347</b>/mo</td></tr>
+        </table>
+        <form class="bill-calc" id="bill-calc">
+          <label>kWh on your bill <input type="number" name="kwh" min="0" max="20000" step="1" value="${Math.round(last.res_kwh_per_month * 2)}" /></label>
+          <label>Days <input type="number" name="days" min="1" max="75" step="1" value="60" /></label>
+          <label>Season <select name="season"><option value="high">Jul–Oct</option><option value="low">Nov–Jun</option></select></label>
+          <output name="out" class="bill-out"></output>
+        </form>
+        <p class="fine">Energy and customer charges from <a href="${GWP_TARIFF.url}" target="_blank" rel="noopener">GWP's standard residential rate</a>, before taxes and surcharges. If your bill is far above this, ask GWP for your daily usage (see Take action).</p>
+      </section>
       <h4 class="sub">Rates</h4>
       <div class="stat-grid">
         <div><b>+${Math.round(elecTotal)}%</b><span>average electric rates, Jan 2024 → Nov 2027 (all steps adopted)</span></div>
@@ -274,7 +321,56 @@ export class EnergyView {
         <span class="fine">${escapeHtml(s.status_note)}</span>
       </div>
       <p class="fine">Water use in ${latestWater.month}: <b>${latestWater.r_gpcd}</b> residential gallons per person per day. Declared shortage level: ${escapeHtml(latestWater.shortage_level || "none reported")}.</p>
-      <p class="fine">GWP is city-owned, so rates are set by Glendale City Council (not the CPUC). Agendas: <a href="https://glendaleca.primegov.com/" target="_blank" rel="noopener">PrimeGov</a>.</p>`;
+      <p class="fine">GWP is city-owned, so rates are set by Glendale City Council (not the CPUC). Agendas: <a href="https://glendaleca.primegov.com/" target="_blank" rel="noopener">PrimeGov</a>.</p>
+      <section id="community" class="community"></section>`;
+
+    const form = this.summaryEl.querySelector("#bill-calc");
+    const calc = () => {
+      const kwh = Number(form.kwh.value) || 0;
+      const days = Math.max(1, Number(form.days.value) || 60);
+      const est = gwpBill(kwh, days, form.season.value);
+      const perMonth = (est / days) * 30.4;
+      form.out.innerHTML = `≈ <b>$${Math.round(est)}</b> for this bill · $${Math.round(perMonth)}/mo · ${((est / Math.max(kwh, 1)) * 100).toFixed(1)}¢/kWh`;
+    };
+    form.addEventListener("input", calc);
+    form.addEventListener("submit", (e) => e.preventDefault());
+    form.season.value = [6, 7, 8, 9].includes(new Date().getMonth()) ? "high" : "low";
+    calc();
+  }
+
+  #medianBill(year) {
+    const vals = Object.values(this.costs.years[year].tracts).map((t) => t.elec_bill).filter((v) => v != null).sort((a, b) => a - b);
+    return vals[Math.floor(vals.length / 2)];
+  }
+
+  async #loadCommunity() {
+    const el = this.summaryEl.querySelector("#community");
+    let data;
+    try {
+      data = await getJson("data/community/reddit.json");
+    } catch {
+      el.remove();
+      return;
+    }
+    const topics = Object.keys(TOPIC_LABEL).filter((t) => data.topics[t]?.length);
+    if (!topics.length) return el.remove();
+    let topic = topics[0];
+    const render = () => {
+      el.innerHTML = `
+        <h4 class="sub">What residents say</h4>
+        <div class="seg community-topics" role="group" aria-label="Topic">${topics.map((t) => `<button type="button" data-t="${t}" aria-pressed="${t === topic}">${TOPIC_LABEL[t]}</button>`).join("")}</div>
+        <ul class="quotes">${data.topics[topic].slice(0, 5).map((q) => `
+          <li><q>${escapeHtml(q.text)}</q>
+            <a class="fine" href="${escapeHtml(q.url)}" target="_blank" rel="noopener">r/glendale ${q.kind}, ${escapeHtml(q.date.slice(0, 7))} ↗</a></li>`).join("")}</ul>
+        <p class="fine">Public posts from ${escapeHtml(data.source)}, fetched ${escapeHtml(data.fetched)}. Usernames removed. Anecdotes, not a survey.</p>`;
+    };
+    el.addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-t]");
+      if (!b) return;
+      topic = b.dataset.t;
+      render();
+    });
+    render();
   }
 
   #buildCharts() {

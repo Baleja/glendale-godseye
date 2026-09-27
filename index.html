@@ -27,7 +27,10 @@
     </div>
     <nav id="event-tabs" class="event-tabs" aria-label="Historical events" data-modes="replay"></nav>
     <div class="spacer" data-modes="history zoning energy property"></div>
-    <button id="live-btn" class="live-btn" type="button">● Compare with today</button>
+    <div class="top-actions">
+      <button id="guide-btn" class="guide-btn" type="button">? How to use</button>
+      <button id="live-btn" class="live-btn" type="button">● Compare with today</button>
+    </div>
   </header>
 
   <nav id="mode-tabs" class="mode-bar" aria-label="Data layers">
@@ -84,6 +87,11 @@
       <section class="panel" data-modes="property">
         <h3>Home values and rents in Glendale</h3>
         <div id="property-summary"></div>
+      </section>
+
+      <section class="panel take-action" data-modes="energy zoning property">
+        <h3>Take action</h3>
+        <div id="actions"></div>
       </section>
 
       <section class="panel inspector">

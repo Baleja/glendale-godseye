@@ -8,6 +8,8 @@ import { HistoryView } from "./history.js";
 import { ZoningView } from "./zoning.js";
 import { EnergyView } from "./energy.js";
 import { PropertyView } from "./property.js";
+import { Guide } from "./guide.js";
+import { ActionsPanel } from "./actions.js";
 
 const MODES = ["energy", "property", "history", "zoning", "replay"];
 const DEFAULT_MODE = "energy";
@@ -60,6 +62,8 @@ let historyView;
 let zoningView;
 let energyView;
 let propertyView;
+let guide;
+let actions;
 let mapReady = false;
 
 /** Checkboxes outside the layer panel that mirror a map layer. */
@@ -169,6 +173,8 @@ function showModeElements(mode) {
   document.body.dataset.mode = mode;
   for (const el of document.querySelectorAll("[data-modes]")) el.hidden = !el.dataset.modes.split(" ").includes(mode);
   setSegPressed("mode-tabs", "mode", mode);
+  actions?.render();
+  guide?.onMode(mode);
 }
 
 async function setMode(mode) {
@@ -397,10 +403,16 @@ async function main() {
       yearLabel: $("heat-year-label"), legendEl: $("heat-legend"), playBtn: $("heat-play"),
     },
   });
+  actions = new ActionsPanel({ el: $("actions"), getMode: () => state.mode, getFacts: () => energyView.facts });
+  guide = new Guide({
+    button: $("guide-btn"),
+    getMode: () => state.mode,
+    onShowMe: () => { if (state.mode === "energy") energyView.play(); },
+  });
   bindUi();
-  map = new GlendaleGridMap("map", () => { mapReady = true; route(); }, (lngLat) => {
+  map = new GlendaleGridMap("map", () => { mapReady = true; route(); }, async (lngLat) => {
     map.markInspected(lngLat);
-    inspect($("inspector"), lngLat);
+    actions.setSpot(lngLat, await inspect($("inspector"), lngLat));
   });
 }
 
